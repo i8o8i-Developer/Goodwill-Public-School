@@ -1,4 +1,4 @@
-import { Phone, Mail, Facebook, MessageCircle, LogIn } from "lucide-react";
+import { Phone, Mail, MessageCircle, LogIn, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const TopBar = () => {
@@ -17,26 +17,15 @@ const TopBar = () => {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <a 
-              href="https://facebook.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-accent transition-colors"
-              aria-label="Facebook"
+            <Link
+              to="/mandatory-public-disclosure"
+              className="flex items-center gap-1 hover:text-accent transition-colors"
             >
-              <Facebook className="h-4 w-4" />
-            </a>
-            <a 
-              href="https://wa.me/919876543210" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-accent transition-colors"
-              aria-label="WhatsApp"
-            >
-              <MessageCircle className="h-4 w-4" />
-            </a>
+              <FileText className="h-4 w-4" />
+              <span className="hidden sm:inline">Mandatory Public Disclosure</span>
+            </Link>
             <Link 
-              to="/login" 
+              to="/erp/login" 
               className="flex items-center gap-1 hover:text-accent transition-colors"
             >
               <LogIn className="h-4 w-4" />

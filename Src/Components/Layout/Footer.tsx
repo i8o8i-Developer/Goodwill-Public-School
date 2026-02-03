@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Facebook, MessageCircle, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, MessageCircle, Clock, Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
 import schoolLogo from "@/Assets/School-Logo.png";
 
 const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-2 xs:px-4 py-6 md:py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* School Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -76,12 +76,12 @@ const Footer = () => {
                 title="School Location"
               ></iframe>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap justify-center gap-3 xs:gap-4 mt-4">
               <a 
                 href="https://facebook.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors"
+                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-[#1877F2] hover:text-white transition-colors shadow-sm"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
@@ -90,10 +90,46 @@ const Footer = () => {
                 href="https://wa.me/919876543210" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-primary-foreground/20 transition-colors"
+                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-green-500 hover:text-white transition-colors shadow-sm"
                 aria-label="WhatsApp"
               >
                 <MessageCircle className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-pink-500 hover:text-white transition-colors shadow-sm"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://twitter.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-blue-400 hover:text-white transition-colors shadow-sm"
+                aria-label="Twitter"
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://youtube.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-red-600 hover:text-white transition-colors shadow-sm"
+                aria-label="YouTube"
+              >
+                <Youtube className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://linkedin.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 bg-primary-foreground/10 rounded-lg hover:bg-blue-700 hover:text-white transition-colors shadow-sm"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -101,9 +137,9 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-primary-foreground/20">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm">
+      <div className="border-t border-primary-foreground/20 mt-4">
+        <div className="container mx-auto px-2 xs:px-4 py-3">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-center">
             <p className="opacity-90">
               © {new Date().getFullYear()} Goodwill Public School. All Rights Reserved.
             </p>
