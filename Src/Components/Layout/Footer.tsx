@@ -68,7 +68,7 @@ const Footer = () => {
             <h4 className="font-bold text-lg">Find Us</h4>
             <div className="rounded-lg overflow-hidden border-2 border-primary-foreground/20">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57447.15!2d82.06!3d25.78!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDQ2JzQ4LjAiTiA4MsKwMDMnMzYuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6196.883393334773!2d82.194586109215!3d25.924155227192273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399a9fefe2dcf495%3A0x644eff8ad7383445!2sGoodwill%20public%20school!5e0!3m2!1sen!2sin!4v1770139998534!5m2!1sen!2sin"
                 width="100%"
                 height="150"
                 style={{ border: 0 }}

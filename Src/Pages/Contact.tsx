@@ -19,7 +19,7 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent successfully! We will get back to you soon.");
+    toast.success("Message Sent Successfully! We Will Get Back To You Soon.");
     setFormData({
       name: "",
       email: "",
@@ -60,8 +60,8 @@ const Contact = () => {
                 Contact Information
               </h2>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Have questions about admissions, academics, or anything else? We're here to help. 
-                Reach out to us through any of the following channels.
+                Have Questions About Admissions, Academics, Or Anything Else? We're Here To Help. 
+                Reach Out To Us Through Any Of The Following Channels.
               </p>
 
               <div className="space-y-6">
@@ -127,13 +127,13 @@ const Contact = () => {
                 className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
               >
                 <MessageCircle className="h-5 w-5" />
-                Chat on WhatsApp
+                Chat On WhatsApp
               </a>
             </div>
 
             {/* Contact Form */}
             <div className="bg-card border border-border p-8 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold text-card-foreground mb-6">Send Us a Message</h3>
+              <h3 className="text-2xl font-bold text-card-foreground mb-6">Send Us A Message</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -144,7 +144,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      placeholder="Enter your name"
+                      placeholder="Enter Your Name"
                     />
                   </div>
                   <div>
@@ -179,7 +179,7 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    placeholder="What is this regarding?"
+                    placeholder="What Is This Regarding?"
                   />
                 </div>
                 <div>
@@ -190,7 +190,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    placeholder="Write your message here..."
+                    placeholder="Write Your Message Here..."
                     rows={5}
                   />
                 </div>
@@ -212,7 +212,7 @@ const Contact = () => {
           </div>
           <div className="rounded-lg overflow-hidden border border-border shadow-md">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57447.15!2d82.06!3d25.78!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDQ2JzQ4LjAiTiA4MsKwMDMnMzYuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6196.883393334773!2d82.194586109215!3d25.924155227192273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399a9fefe2dcf495%3A0x644eff8ad7383445!2sGoodwill%20public%20school!5e0!3m2!1sen!2sin!4v1770139998534!5m2!1sen!2sin"
               width="100%"
               height="400"
               style={{ border: 0 }}

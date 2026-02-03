@@ -23,7 +23,7 @@ const Admissions = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Application submitted successfully! We will contact you soon.");
+    toast.success("Application Submitted Successfully! We Will Contact You Soon.");
     setFormData({
       studentName: "",
       dob: "",
@@ -49,7 +49,7 @@ const Admissions = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-primary-foreground">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Admissions</h1>
-            <p className="text-lg opacity-90">Join the Goodwill Family</p>
+            <p className="text-lg opacity-90">Join The Goodwill Family</p>
           </div>
         </div>
       </section>
@@ -65,8 +65,8 @@ const Admissions = () => {
               Admissions Now Open
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We invite applications for admission to Nursery through Class IX for the 
-              academic session 2026-27. Limited seats available.
+              We Invite Applications For Admission To Nursery Through Class IX For The 
+              Academic Session 2026-27. Limited Seats Available.
             </p>
           </div>
 
@@ -93,11 +93,11 @@ const Admissions = () => {
               <h3 className="text-2xl font-bold text-foreground mb-6">Admission Process</h3>
               <div className="space-y-4">
                 {[
-                  "Fill and submit the online admission form",
-                  "Submit required documents at the school office",
-                  "Student interaction / assessment (for applicable classes)",
-                  "Parent interview with the Principal",
-                  "Admission confirmation and fee payment",
+                  "Fill And Submit The Online Admission Form",
+                  "Submit Required Documents At The School Office",
+                  "Student Interaction / Assessment (For Applicable Classes)",
+                  "Parent Interview With The Principal",
+                  "Admission Confirmation And Fee Payment",
                 ].map((step, index) => (
                   <div key={index} className="flex items-start gap-4">
                     <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center flex-shrink-0 font-bold">
@@ -111,11 +111,11 @@ const Admissions = () => {
               <h3 className="text-2xl font-bold text-foreground mb-6 mt-12">Required Documents</h3>
               <ul className="space-y-3">
                 {[
-                  "Birth Certificate (original & photocopy)",
-                  "Aadhar Card of student and parents",
-                  "Transfer Certificate (for Class II onwards)",
-                  "Report Card of previous class",
-                  "4 Passport size photographs",
+                  "Birth Certificate (Original & Photocopy)",
+                  "Aadhar Card Of Student And Parents",
+                  "Transfer Certificate (For Class II Onwards)",
+                  "Report Card Of Previous Class",
+                  "4 Passport Size Photographs",
                   "Address Proof",
                 ].map((doc, index) => (
                   <li key={index} className="flex items-center gap-3 text-muted-foreground">
@@ -138,12 +138,12 @@ const Admissions = () => {
                     value={formData.studentName}
                     onChange={handleChange}
                     required
-                    placeholder="Enter student's name"
+                    placeholder="Enter Student's Name"
                   />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="dob">Date of Birth *</Label>
+                    <Label htmlFor="dob">Date Of Birth *</Label>
                     <Input
                       id="dob"
                       name="dob"
@@ -160,7 +160,7 @@ const Admissions = () => {
                       onValueChange={(value) => setFormData({...formData, classApplying: value})}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select class" />
+                        <SelectValue placeholder="Select Class" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="nursery">Nursery</SelectItem>
@@ -188,7 +188,7 @@ const Admissions = () => {
                       value={formData.parentName}
                       onChange={handleChange}
                       required
-                      placeholder="Enter parent's name"
+                      placeholder="Enter Parent's Name"
                     />
                   </div>
                   <div>
@@ -198,7 +198,7 @@ const Admissions = () => {
                       onValueChange={(value) => setFormData({...formData, relation: value})}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select relation" />
+                        <SelectValue placeholder="Select Relation" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="father">Father</SelectItem>
@@ -241,7 +241,7 @@ const Admissions = () => {
                     value={formData.address}
                     onChange={handleChange}
                     required
-                    placeholder="Enter complete address"
+                    placeholder="Enter Complete Address"
                     rows={3}
                   />
                 </div>
