@@ -5,7 +5,7 @@ import { Textarea } from "@/Components/ui/Textarea";
 import { Label } from "@/Components/ui/Label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/Select";
 import { CalendarDays, FileText, CheckCircle, Clock, GraduationCap } from "lucide-react";
-import heroSchool from "@/assets/hero-school.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
 import { useState } from "react";
 import { toast } from "sonner";
 

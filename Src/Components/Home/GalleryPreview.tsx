@@ -2,9 +2,12 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/Components/ui/Button";
 import { motion } from "framer-motion";
-import heroSchool from "@/Assets/Hero-School.jpg";
-import heroClassroom from "@/Assets/Hero-Classroom.jpg";
-import heroSports from "@/Assets/Hero-Sports.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
+import heroClassroom from "@/Assets/Hero-Classroom.png";
+import heroSports from "@/Assets/Hero-Sports.png";
+import culturalprogram from "@/Assets/Cultural-Program.png";  
+import annualfunction from "@/Assets/Annual-Function.png";
+import sciencelab from "@/Assets/Science-Lab.png";
 
 const galleryImages = [
   {
@@ -15,31 +18,31 @@ const galleryImages = [
   },
   {
     id: 2,
-    src: heroClassroom,
-    title: "Smart Classroom",
-    category: "Academics",
-  },
-  {
-    id: 3,
     src: heroSports,
     title: "Sports Day",
     category: "Events",
   },
   {
-    id: 4,
-    src: heroSchool,
-    title: "Annual Function",
-    category: "Events",
+    id: 3,
+    src: heroClassroom,
+    title: "Smart Classroom",
+    category: "Academics",
   },
   {
-    id: 5,
-    src: heroClassroom,
+    id: 4,
+    src: sciencelab,
     title: "Science Lab",
     category: "Facilities",
   },
   {
+    id: 5,
+    src: annualfunction,
+    title: "Annual Function",
+    category: "Events",
+  },
+  {
     id: 6,
-    src: heroSports,
+    src: culturalprogram,
     title: "Cultural Program",
     category: "Events",
   },
@@ -81,9 +84,8 @@ const GalleryPreview = () => {
                 <img
                   src={image.src}
                   alt={image.title}
-                  className={`w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
-                    index === 0 ? 'h-64 md:h-full' : 'h-48 md:h-56'
-                  }`}
+                  className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110`}
+                  style={{ minHeight: '100%', maxHeight: '100%' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-background transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">

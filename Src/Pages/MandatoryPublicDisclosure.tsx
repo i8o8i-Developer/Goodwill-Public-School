@@ -4,7 +4,7 @@ const disclosureData = [
   {
     title: "A. GENERAL INFORMATION",
     items: [
-      { label: "Name of the School", value: "Goodwill Public School" },
+      { label: "Name Of The School", value: "Goodwill Public School" },
       { label: "Affiliation Number", value: "1234567" },
       { label: "School Code", value: "98765" },
       { label: "Complete Address", value: "Patti, Pratapgarh, Uttar Pradesh - 230141" },
@@ -17,7 +17,7 @@ const disclosureData = [
     title: "B. DOCUMENTS AND INFORMATION",
     items: [
       { label: "Affiliation Letter", value: <a href="#">View Document</a> },
-      { label: "NOC from State Govt.", value: <a href="#">View Document</a> },
+      { label: "NOC From State Govt.", value: <a href="#">View Document</a> },
       { label: "Recognition Certificate", value: <a href="#">View Document</a> },
       { label: "Building Safety Certificate", value: <a href="#">View Document</a> },
       { label: "Fire Safety Certificate", value: <a href="#">View Document</a> },
@@ -28,7 +28,7 @@ const disclosureData = [
     title: "C. RESULT AND ACADEMICS",
     items: [
       { label: "Academic Calendar", value: <a href="/academic-calendar">View</a> },
-      { label: "List of Books", value: <a href="#">View Document</a> },
+      { label: "List Of Books", value: <a href="#">View Document</a> },
       { label: "Annual Report", value: <a href="#">View Document</a> },
     ],
   },

@@ -1,6 +1,6 @@
 import Layout from "@/Components/Layout/Layout";
 import { Book, Clock, Shirt, FileWarning, Users, Shield, Award, AlertTriangle } from "lucide-react";
-import heroSchool from "@/assets/hero-school.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
 
 const Rules = () => {
   return (
@@ -12,7 +12,7 @@ const Rules = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-primary-foreground">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Rules & Regulations</h1>
-            <p className="text-lg opacity-90">Guidelines for a Disciplined Environment</p>
+            <p className="text-lg opacity-90">Guidelines For A Disciplined Environment</p>
           </div>
         </div>
       </section>
@@ -26,11 +26,11 @@ const Rules = () => {
                 School Discipline
               </p>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Code of Conduct
+                Code Of Conduct
               </h2>
               <p className="text-muted-foreground">
-                These rules are designed to create a safe, respectful, and conducive learning 
-                environment for all students.
+                These Rules Are Designed To Create A Safe, Respectful, And Conducive Learning 
+                Environment For All Students.
               </p>
             </div>
 
@@ -44,11 +44,11 @@ const Rules = () => {
                   <div>
                     <h3 className="text-xl font-bold text-card-foreground mb-4">Attendance Policy</h3>
                     <ul className="space-y-2 text-muted-foreground">
-                      <li>• Students must maintain a minimum of 75% attendance to appear for examinations.</li>
-                      <li>• Late arrivals will be noted and parents will be informed.</li>
-                      <li>• Leave applications must be submitted in advance for planned absences.</li>
-                      <li>• Medical leave requires a doctor's certificate for absences exceeding 3 days.</li>
-                      <li>• Students should reach school at least 10 minutes before the assembly.</li>
+                      <li>• Students Must Maintain A Minimum Of 75% Attendance To Appear For Examinations.</li>
+                      <li>• Late Arrivals Will Be Noted And Parents Will Be Informed.</li>
+                      <li>• Leave Applications Must Be Submitted In Advance For Planned Absences.</li>
+                      <li>• Medical Leave Requires A Doctor's Certificate For Absences Exceeding 3 Days.</li>
+                      <li>• Students Should Reach School At Least 10 Minutes Before The Assembly.</li>
                     </ul>
                   </div>
                 </div>
@@ -63,12 +63,12 @@ const Rules = () => {
                   <div>
                     <h3 className="text-xl font-bold text-card-foreground mb-4">Uniform Guidelines</h3>
                     <ul className="space-y-2 text-muted-foreground">
-                      <li>• Students must wear the prescribed school uniform every day.</li>
-                      <li>• Uniforms should be clean, ironed, and in good condition.</li>
-                      <li>• Black polished shoes and white socks are mandatory.</li>
-                      <li>• ID cards must be worn at all times within the school premises.</li>
-                      <li>• No jewelry or accessories except for small ear studs for girls.</li>
-                      <li>• Hair should be neat and well-groomed. Boys must have short hair.</li>
+                      <li>• Students Must Wear The Prescribed School Uniform Every Day.</li>
+                      <li>• Uniforms Should Be Clean, Ironed, And In Good Condition.</li>
+                      <li>• Black Polished Shoes And White Socks Are Mandatory.</li>
+                      <li>• ID Cards Must Be Worn At All Times Within The School Premises.</li>
+                      <li>• No Jewelry Or Accessories Except For Small Ear Studs For Girls.</li>
+                      <li>• Hair Should Be Neat And Well-Groomed. Boys Must Have Short Hair.</li>
                     </ul>
                   </div>
                 </div>
@@ -83,12 +83,12 @@ const Rules = () => {
                   <div>
                     <h3 className="text-xl font-bold text-card-foreground mb-4">Examination Rules</h3>
                     <ul className="space-y-2 text-muted-foreground">
-                      <li>• Students must carry their admit card for all examinations.</li>
-                      <li>• Mobile phones and electronic devices are strictly prohibited.</li>
-                      <li>• Any form of malpractice will result in immediate disqualification.</li>
-                      <li>• Students must remain seated until the exam paper is collected.</li>
-                      <li>• No student can leave the exam hall before the specified time.</li>
-                      <li>• All necessary stationery should be brought by the student.</li>
+                      <li>• Students Must Carry Their Admit Card For All Examinations.</li>
+                      <li>• Mobile Phones And Electronic Devices Are Strictly Prohibited.</li>
+                      <li>• Any Form Of Malpractice Will Result In Immediate Disqualification.</li>
+                      <li>• Students Must Remain Seated Until The Exam Paper Is Collected.</li>
+                      <li>• No Student Can Leave The Exam Hall Before The Specified Time.</li>
+                      <li>• All Necessary Stationery Should Be Brought By The Student.</li>
                     </ul>
                   </div>
                 </div>
@@ -103,12 +103,12 @@ const Rules = () => {
                   <div>
                     <h3 className="text-xl font-bold text-card-foreground mb-4">General Discipline</h3>
                     <ul className="space-y-2 text-muted-foreground">
-                      <li>• Respect teachers, staff, and fellow students at all times.</li>
-                      <li>• Bullying, ragging, or any form of harassment is strictly prohibited.</li>
-                      <li>• School property must be treated with care. Damage will result in fines.</li>
-                      <li>• Students should not leave the campus during school hours without permission.</li>
-                      <li>• Use of abusive language is not tolerated.</li>
-                      <li>• Students must participate in assembly, sports, and other school activities.</li>
+                      <li>• Respect Teachers, Staff, And Fellow Students At All Times.</li>
+                      <li>• Bullying, Ragging, Or Any Form Of Harassment Is Strictly Prohibited.</li>
+                      <li>• School Property Must Be Treated With Care. Damage Will Result In Fines.</li>
+                      <li>• Students Should Not Leave The Campus During School Hours Without Permission.</li>
+                      <li>• Use Of Abusive Language Is Not Tolerated.</li>
+                      <li>• Students Must Participate In Assembly, Sports, And Other School Activities.</li>
                     </ul>
                   </div>
                 </div>
@@ -123,12 +123,12 @@ const Rules = () => {
                   <div>
                     <h3 className="text-xl font-bold text-card-foreground mb-4">Prohibited Items</h3>
                     <ul className="space-y-2 text-muted-foreground">
-                      <li>• Mobile phones and other electronic gadgets</li>
-                      <li>• Expensive jewelry or large amounts of cash</li>
-                      <li>• Weapons or sharp objects of any kind</li>
-                      <li>• Chewing gum, tobacco, or any harmful substances</li>
-                      <li>• Playing cards, dice, or other gaming materials</li>
-                      <li>• Any material that is inappropriate or against school values</li>
+                      <li>• Mobile Phones And Other Electronic Gadgets</li>
+                      <li>• Expensive Jewelry Or Large Amounts Of Cash</li>
+                      <li>• Weapons Or Sharp Objects Of Any Kind</li>
+                      <li>• Chewing Gum, Tobacco, Or Any Harmful Substances</li>
+                      <li>• Playing Cards, Dice, Or Other Gaming Materials</li>
+                      <li>• Any Material That Is Inappropriate Or Against School Values</li>
                     </ul>
                   </div>
                 </div>

@@ -1,16 +1,17 @@
 import { useState } from "react";
 import Layout from "@/Components/Layout/Layout";
-import heroSchool from "@/assets/hero-school.jpg";
-import heroClassroom from "@/assets/hero-classroom.jpg";
-import heroSports from "@/assets/hero-sports.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
+import heroClassroom from "@/Assets/Hero-Classroom.png";
+import heroSports from "@/Assets/Hero-Sports.png";
+import culturalprogram from "@/Assets/Cultural-Program.png";  
+import annualfunction from "@/Assets/Annual-Function.png";
+import sciencelab from "@/Assets/Science-Lab.png";
 import { X } from "lucide-react";
 
 const galleryData = [
   {
     category: "Campus",
     images: [
-      { src: heroSchool, title: "School Main Building" },
-      { src: heroSchool, title: "School Entrance" },
       { src: heroSchool, title: "Campus View" },
     ],
   },
@@ -18,24 +19,14 @@ const galleryData = [
     category: "Academics",
     images: [
       { src: heroClassroom, title: "Smart Classroom" },
-      { src: heroClassroom, title: "Science Lab" },
-      { src: heroClassroom, title: "Computer Lab" },
+      { src: sciencelab, title: "Science Lab" },
     ],
   },
   {
     category: "Events",
     images: [
-      { src: heroSports, title: "Annual Sports Day" },
-      { src: heroSports, title: "Republic Day" },
-      { src: heroSports, title: "Cultural Program" },
-    ],
-  },
-  {
-    category: "Activities",
-    images: [
-      { src: heroSports, title: "Morning Assembly" },
-      { src: heroClassroom, title: "Art Competition" },
-      { src: heroSports, title: "Prize Distribution" },
+      { src: annualfunction, title: "Annual Function" },
+      { src: culturalprogram, title: "Cultural Program" },
     ],
   },
 ];

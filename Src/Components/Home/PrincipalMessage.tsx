@@ -1,5 +1,5 @@
 import { Quote } from "lucide-react";
-import principalImage from "@/assets/principal.jpg";
+import principalImage from "@/Assets/Principal.jpg";
 
 const PrincipalMessage = () => {
   return (

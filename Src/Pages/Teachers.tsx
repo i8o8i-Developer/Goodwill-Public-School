@@ -1,21 +1,22 @@
 import Layout from "@/Components/Layout/Layout";
 import { useState } from "react";
+import femaleTeacher from "@/Assets/Teachers/Female-Teacher.png";
+import maleTeacher from "@/Assets/Teachers/Male-Teacher.png";
 
 // Example teacher data
 const teachers = [
   {
     name: "Mrs. Anjali Sharma",
     subject: "Mathematics",
-    photo: "/Assets/Teachers/anjali-sharma.jpg",
-    bio: "Senior Mathematics teacher with 15+ years of experience."
+    photo: femaleTeacher,
+    bio: "Senior Mathematics Teacher With 15+ Years Of Experience."
   },
   {
     name: "Mr. Rajesh Kumar",
     subject: "Science",
-    photo: "/Assets/Teachers/rajesh-kumar.jpg",
-    bio: "Passionate about practical science and student engagement."
+    photo: maleTeacher,
+    bio: "Passionate About Practical Science And Student Engagement."
   },
-  // Add more teachers as needed
 ];
 
 const Teachers = () => {

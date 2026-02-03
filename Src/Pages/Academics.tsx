@@ -1,6 +1,6 @@
 import Layout from "@/Components/Layout/Layout";
 import { BookOpen, Calculator, FlaskConical, Globe, Music, Palette, Dumbbell, MonitorPlay } from "lucide-react";
-import heroClassroom from "@/assets/hero-classroom.jpg";
+import heroClassroom from "@/Assets/Hero-Classroom.png";
 
 const Academics = () => {
   return (
@@ -12,7 +12,7 @@ const Academics = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-primary-foreground">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Academics</h1>
-            <p className="text-lg opacity-90">Excellence in Education</p>
+            <p className="text-lg opacity-90">Excellence In Education</p>
           </div>
         </div>
       </section>
@@ -28,9 +28,9 @@ const Academics = () => {
               CBSE Curriculum
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto">
-              Goodwill Public School follows the CBSE (Central Board of Secondary Education) 
-              curriculum, which provides a comprehensive and well-rounded education that 
-              prepares students for higher studies and competitive examinations.
+              Goodwill Public School Follows The CBSE (Central Board of Secondary Education) 
+              Curriculum, Which Provides A Comprehensive And Well-Rounded Education That 
+              Prepares Students For Higher Studies And Competitive Examinations.
             </p>
           </div>
 
@@ -39,11 +39,11 @@ const Academics = () => {
               <h3 className="text-2xl font-bold text-foreground mb-6">Class Structure</h3>
               <div className="space-y-4">
                 {[
-                  { level: "Pre-Primary", classes: "Nursery, LKG, UKG", desc: "Foundation years with play-based learning" },
-                  { level: "Primary", classes: "Class I to V", desc: "Building core skills in language, math, and science" },
-                  { level: "Middle School", classes: "Class VI to VIII", desc: "Expanding knowledge across subjects" },
-                  { level: "Secondary", classes: "Class IX to X", desc: "Board examination preparation" },
-                  { level: "Senior Secondary", classes: "Class XI to XII", desc: "Specialization in Science/Commerce/Arts" },
+                  { level: "Pre-Primary", classes: "Nursery, LKG, UKG", desc: "Foundation Years With Play-Based Learning" },
+                  { level: "Primary", classes: "Class I to V", desc: "Building Core Skills In Language, Math, And Science" },
+                  { level: "Middle School", classes: "Class VI to VIII", desc: "Expanding Knowledge Across Subjects" },
+                  { level: "Secondary", classes: "Class IX to X", desc: "Board Examination Preparation" },
+                  { level: "Senior Secondary", classes: "Class XI to XII", desc: "Specialization In Science/Commerce/Arts" },
                 ].map((item, index) => (
                   <div key={index} className="bg-card border border-border p-4 rounded-lg">
                     <div className="flex justify-between items-start mb-2">
@@ -60,20 +60,20 @@ const Academics = () => {
               <h3 className="text-2xl font-bold text-foreground mb-6">Teaching Methodology</h3>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Our teaching methodology is designed to make learning engaging, interactive, 
-                  and effective. We employ a blend of traditional and modern teaching techniques 
-                  to cater to different learning styles.
+                  Our Teaching Methodology Is Designed To Make Learning Engaging, Interactive, 
+                  And Effective. We Employ A Blend Of Traditional And Modern Teaching Techniques 
+                  To Cater To Different Learning Styles.
                 </p>
                 <ul className="space-y-3">
                   {[
-                    "Interactive classroom discussions",
-                    "Hands-on experiments and projects",
-                    "Audio-visual learning with smart boards",
-                    "Regular assessments and feedback",
-                    "Personalized attention for slow learners",
-                    "Advanced programs for gifted students",
-                    "Group activities and collaborative learning",
-                    "Real-world application of concepts",
+                    "Interactive Classroom Discussions",
+                    "Hands-On Experiments And Projects",
+                    "Audio-Visual Learning With Smart Boards",
+                    "Regular Assessments And Feedback",
+                    "Personalized Attention For Slow Learners",
+                    "Advanced Programs For Gifted Students",
+                    "Group Activities And Collaborative Learning",
+                    "Real-World Application Of Concepts",
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
@@ -141,15 +141,15 @@ const Academics = () => {
             {[
               {
                 title: "Continuous Assessment",
-                desc: "Regular class tests, assignments, and project work to evaluate ongoing learning progress.",
+                desc: "Regular Class Tests, Assignments, And Project Work To Evaluate Ongoing Learning Progress.",
               },
               {
                 title: "Periodic Tests",
-                desc: "Unit tests conducted periodically to assess understanding of concepts covered in each unit.",
+                desc: "Unit Tests Conducted Periodically To Assess Understanding Of Concepts Covered In Each Unit.",
               },
               {
                 title: "Term Examinations",
-                desc: "Comprehensive examinations at the end of each term covering the entire syllabus.",
+                desc: "Comprehensive Examinations At The End Of Each Term Covering The Entire Syllabus.",
               },
             ].map((item, index) => (
               <div key={index} className="bg-card border border-border p-6 rounded-lg">

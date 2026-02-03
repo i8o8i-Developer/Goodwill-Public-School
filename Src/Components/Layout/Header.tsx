@@ -9,7 +9,6 @@ const navGroups = [
     items: [
       { name: "Academics", path: "/academics" },
       { name: "Teachers", path: "/teachers" },
-      // Add more academic links here
     ],
   },
   {
@@ -25,7 +24,6 @@ const navGroups = [
     items: [
       { name: "Gallery", path: "/gallery" },
       { name: "Notices", path: "/notices" },
-      // Add more links here
     ],
   },
 ];

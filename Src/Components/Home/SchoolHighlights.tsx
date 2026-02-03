@@ -51,7 +51,7 @@ const SchoolHighlights = () => {
             School Highlights
           </h2>
           <p className="text-primary-foreground/80 max-w-2xl mx-auto">
-            Numbers that speak for our commitment to quality education and all-round development.
+            Numbers That Speak For Our Commitment To Quality Education And All-Round Development.
           </p>
         </div>
 

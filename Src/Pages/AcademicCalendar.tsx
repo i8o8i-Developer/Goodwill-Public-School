@@ -75,7 +75,7 @@ const AcademicCalendar = () => {
               Academic Calendar
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Stay updated with all important academic events, examinations, and holidays
+              Stay Updated With All Important Academic Events, Examinations, And Holidays
             </p>
           </motion.div>
 
@@ -103,7 +103,7 @@ const AcademicCalendar = () => {
                 <div className="mt-6 p-4 bg-card rounded-lg border border-primary/30">
                   <div className="flex items-center gap-2 text-sm text-foreground">
                     <div className="w-3 h-3 rounded-full bg-primary border-2 border-primary"></div>
-                    <span>Days with events</span>
+                    <span>Days With Events</span>
                   </div>
                 </div>
               </div>
@@ -140,8 +140,8 @@ const AcademicCalendar = () => {
                       <div className="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mb-4">
                         <CalendarIcon className="w-10 h-10 text-muted-foreground" />
                       </div>
-                      <p className="text-muted-foreground text-lg font-medium">No events scheduled</p>
-                      <p className="text-muted-foreground/70 text-sm mt-2">Select a highlighted date to view events</p>
+                      <p className="text-muted-foreground text-lg font-medium">No Events Scheduled</p>
+                      <p className="text-muted-foreground/70 text-sm mt-2">Select A Highlighted Date To View Events</p>
                     </motion.div>
                   ) : (
                     <motion.div

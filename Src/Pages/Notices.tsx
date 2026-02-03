@@ -1,7 +1,7 @@
 import Layout from "@/Components/Layout/Layout";
 import { Badge } from "@/Components/ui/Badge";
 import { Calendar, Download, AlertTriangle, FileText } from "lucide-react";
-import heroSchool from "@/assets/hero-school.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
 
 const noticesData = [
   {
@@ -10,7 +10,7 @@ const noticesData = [
     date: "2026-02-01",
     category: "Examination",
     priority: "high",
-    content: "The annual examination for all classes will commence from 15th March 2026. Students are advised to prepare well and adhere to the examination rules. Detailed date sheet is attached below.",
+    content: "The Annual Examination For All Classes Will Commence From 15th March 2026. Students Are Advised To Prepare Well And Adhere To The Examination Rules. Detailed Date Sheet Is Attached Below.",
     attachment: true,
   },
   {
@@ -19,7 +19,7 @@ const noticesData = [
     date: "2026-01-28",
     category: "Meeting",
     priority: "normal",
-    content: "Parent-Teacher Meeting is scheduled for 10th February 2026 from 9:00 AM to 1:00 PM for classes VI to X. Parents are requested to attend without fail to discuss their ward's academic progress.",
+    content: "Parent-Teacher Meeting Is Scheduled For 10th February 2026 From 9:00 AM To 1:00 PM For Classes VI To X. Parents Are Requested To Attend Without Fail To Discuss Their Ward's Academic Progress.",
     attachment: false,
   },
   {
@@ -28,7 +28,7 @@ const noticesData = [
     date: "2026-01-25",
     category: "Event",
     priority: "normal",
-    content: "School will celebrate Republic Day on 26th January 2026. All students must attend in proper uniform by 8:00 AM. Cultural programs and march past will be conducted.",
+    content: "School Will Celebrate Republic Day On 26th January 2026. All Students Must Attend In Proper Uniform By 8:00 AM. Cultural Programs And March Past Will Be Conducted.",
     attachment: false,
   },
   {
@@ -37,7 +37,7 @@ const noticesData = [
     date: "2026-01-20",
     category: "Admission",
     priority: "high",
-    content: "Admissions are now open for Nursery to Class IX for the academic session 2026-27. Limited seats available. Early bird discount available till 28th February 2026.",
+    content: "Admissions Are Now Open For Nursery To Class IX For The Academic Session 2026-27. Limited Seats Available. Early Bird Discount Available Till 28th February 2026.",
     attachment: true,
   },
   {
@@ -46,7 +46,7 @@ const noticesData = [
     date: "2026-01-15",
     category: "Academic",
     priority: "normal",
-    content: "Students are reminded to submit their winter vacation homework on or before 20th January 2026. Incomplete or late submissions will affect internal assessment marks.",
+    content: "Students Are Reminded To Submit Their Winter Vacation Homework On Or Before 20th January 2026. Incomplete Or Late Submissions Will Affect Internal Assessment Marks.",
     attachment: false,
   },
   {
@@ -55,7 +55,7 @@ const noticesData = [
     date: "2026-01-10",
     category: "Event",
     priority: "normal",
-    content: "The annual Science Exhibition will be held on 22nd February 2026. Students from classes VI to X are encouraged to participate. Registration forms available with class teachers.",
+    content: "The Annual Science Exhibition Will Be Held On 22nd February 2026. Students From Classes VI To X Are Encouraged To Participate. Registration Forms Available With Class Teachers.",
     attachment: true,
   },
 ];

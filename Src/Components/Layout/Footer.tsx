@@ -21,7 +21,9 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-sm opacity-90 leading-relaxed">
-              Nurturing Young Minds With Value-Based Education, Discipline, And Excellence Since Our Establishment.
+              Nurturing Young Minds With Value-Based Education, Discipline, And Excellence Since Our Establishment.<br />
+              We Are Committed To Holistic Development, Academic Achievement, And Strong Moral Values.<br />
+              Join Us In Building A Brighter Future For Every Student At Goodwill Public School.
             </p>
           </div>
 
@@ -144,7 +146,7 @@ const Footer = () => {
               © {new Date().getFullYear()} Goodwill Public School. All Rights Reserved.
             </p>
             <p className="opacity-90">
-              Designed & Developed by <span className="font-semibold text-accent">DurgaAI Solutions</span>
+              Designed & Developed By <span className="font-semibold text-accent">DurgaAI Solutions</span>
             </p>
           </div>
         </div>

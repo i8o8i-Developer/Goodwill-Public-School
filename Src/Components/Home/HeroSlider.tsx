@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/Components/ui/Button";
 import { Link } from "react-router-dom";
-import heroSchool from "@/Assets/Hero-School.jpg";
-import heroClassroom from "@/Assets/Hero-Classroom.jpg";
-import heroSports from "@/Assets/Hero-Sports.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
+import heroClassroom from "@/Assets/Hero-Classroom.png";
+import heroSports from "@/Assets/Hero-Sports.png";
 
 const slides = [
   {

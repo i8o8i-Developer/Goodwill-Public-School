@@ -4,7 +4,7 @@ import { Input } from "@/Components/ui/Input";
 import { Textarea } from "@/Components/ui/Textarea";
 import { Label } from "@/Components/ui/Label";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
-import heroSchool from "@/assets/hero-school.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
 import { useState } from "react";
 import { toast } from "sonner";
 

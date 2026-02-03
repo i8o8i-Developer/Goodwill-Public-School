@@ -1,6 +1,6 @@
 import Layout from "@/Components/Layout/Layout";
 import principalImage from "@/assets/principal.jpg";
-import heroSchool from "@/assets/hero-school.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
 
 const administrationTeam = [
   {
@@ -8,21 +8,21 @@ const administrationTeam = [
     designation: "Chairman",
     qualification: "M.Com, MBA",
     image: principalImage,
-    message: "Education is the most powerful weapon which you can use to change the world. At Goodwill, we are committed to providing quality education that transforms lives.",
+    message: "Education Is The Most Powerful Weapon Which You Can Use To Change The World. At Goodwill, We Are Committed To Providing Quality Education That Transforms Lives.",
   },
   {
     name: "Dr. Rajesh Kumar Singh",
     designation: "Principal",
     qualification: "M.A., M.Ed., Ph.D.",
     image: principalImage,
-    message: "Our mission is to nurture young minds and prepare them to become responsible citizens who contribute positively to society.",
+    message: "Our Mission Is To Nurture Young Minds And Prepare Them To Become Responsible Citizens Who Contribute Positively To Society.",
   },
   {
     name: "Mrs. Sunita Devi",
     designation: "Vice Principal",
     qualification: "M.Sc., B.Ed.",
     image: principalImage,
-    message: "We believe in holistic development that goes beyond academics to include character building and life skills.",
+    message: "We Believe In Holistic Development That Goes Beyond Academics To Include Character Building And Life Skills.",
   },
 ];
 

@@ -1,7 +1,7 @@
 import Layout from "@/Components/Layout/Layout";
 import { BookOpen, Target, Eye, History, Award, Users, Heart } from "lucide-react";
 import principalImage from "@/assets/principal.jpg";
-import heroSchool from "@/assets/hero-school.jpg";
+import heroSchool from "@/Assets/Hero-School.png";
 
 const About = () => {
   return (
@@ -27,26 +27,26 @@ const About = () => {
                 Our Story
               </p>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Welcome to Goodwill Public School
+                Welcome To Goodwill Public School
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Goodwill Public School, located in the heart of Patti, Pratapgarh, Uttar Pradesh, 
-                  is a premier educational institution committed to providing quality education 
-                  following the CBSE curriculum. Established with a vision to create enlightened 
-                  citizens, we have been serving the community with dedication and excellence.
+                  Goodwill Public School, Located In The Heart Of Patti, Pratapgarh, Uttar Pradesh, 
+                  Is A Premier Educational Institution Committed To Providing Quality Education 
+                  Following The CBSE Curriculum. Established With A Vision To Create Enlightened 
+                  Citizens, We Have Been Serving The Community With Dedication And Excellence.
                 </p>
                 <p>
-                  Our school provides a nurturing environment where students are encouraged to 
-                  explore their potential, develop critical thinking skills, and cultivate values 
-                  that will guide them throughout their lives. With state-of-the-art facilities 
-                  and a dedicated faculty, we ensure that every child receives personalized 
-                  attention and guidance.
+                  Our School Provides A Nurturing Environment Where Students Are Encouraged To 
+                  Explore Their Potential, Develop Critical Thinking Skills, And Cultivate Values 
+                  That Will Guide Them Throughout Their Lives. With State-Of-The-Art Facilities 
+                  And A Dedicated Faculty, We Ensure That Every Child Receives Personalized   
+                  Attention And Guidance.
                 </p>
                 <p>
-                  From Nursery to Senior Secondary, we offer a comprehensive curriculum that 
-                  balances academic rigor with co-curricular activities, sports, and value 
-                  education to ensure holistic development of every student.
+                  From Nursery To Senior Secondary, We Offer A Comprehensive Curriculum That 
+                  Balances Academic Rigor With Co-Curricular Activities, Sports, And Value 
+                  Education To Ensure Holistic Development Of Every Student.
                 </p>
               </div>
             </div>
@@ -58,7 +58,7 @@ const About = () => {
               />
               <div className="absolute -bottom-6 -left-6 bg-accent text-accent-foreground p-6 rounded-lg shadow-lg">
                 <div className="text-4xl font-bold">15+</div>
-                <div className="text-sm">Years of Excellence</div>
+                <div className="text-sm">Years Of Excellence</div>
               </div>
             </div>
           </div>
@@ -75,10 +75,10 @@ const About = () => {
               </div>
               <h3 className="text-2xl font-bold text-card-foreground mb-4">Our Vision</h3>
               <p className="text-muted-foreground leading-relaxed">
-                To be a center of educational excellence that nurtures young minds to become 
-                responsible, compassionate, and innovative citizens who contribute positively 
-                to society. We envision a school where every child discovers their unique 
-                potential and develops the skills necessary to thrive in an ever-changing world.
+                To Be A Center Of Educational Excellence That Nurtures Young Minds To Become 
+                Responsible, Compassionate, And Innovative Citizens Who Contribute Positively 
+                To Society. We Envision A School Where Every Child Discovers Their Unique 
+                Potential And Develops The Skills Necessary To Thrive In An Ever-Changing World.
               </p>
             </div>
             <div className="bg-card p-8 rounded-lg shadow-md border border-border">
@@ -87,11 +87,11 @@ const About = () => {
               </div>
               <h3 className="text-2xl font-bold text-card-foreground mb-4">Our Mission</h3>
               <p className="text-muted-foreground leading-relaxed">
-                To provide holistic education that combines academic excellence with moral 
-                values, character building, and life skills. We are committed to creating a 
-                safe, inclusive, and stimulating learning environment where students are 
-                encouraged to question, explore, and grow into confident individuals ready 
-                to face the challenges of tomorrow.
+                To Provide Holistic Education That Combines Academic Excellence With Moral 
+                Values, Character Building, And Life Skills. We Are Committed To Creating A 
+                Safe, Inclusive, And Stimulating Learning Environment Where Students Are 
+                Encouraged To Question, Explore, And Grow Into Confident Individuals Ready 
+                To Face The Challenges Of Tomorrow.
               </p>
             </div>
           </div>
@@ -127,22 +127,22 @@ const About = () => {
                   Dear Parents and Students,
                 </p>
                 <p>
-                  It gives me immense pleasure to welcome you to Goodwill Public School. Our 
-                  institution stands as a beacon of quality education, where we strive to 
-                  develop not just academic excellence but also strong moral character in 
-                  our students.
+                  It Gives Me Immense Pleasure To Welcome You To Goodwill Public School. Our 
+                  Institution Stands As A Beacon Of Quality Education, Where We Strive To 
+                  Develop Not Just Academic Excellence But Also Strong Moral Character In 
+                  Our Students.
                 </p>
                 <p>
-                  Education at Goodwill goes beyond textbooks. We believe in nurturing the 
-                  complete personality of a child - intellectual, physical, emotional, and 
-                  spiritual. Our dedicated team of educators works tirelessly to create an 
-                  environment that fosters curiosity, creativity, and critical thinking.
+                  Education At Goodwill Goes Beyond Textbooks. We Believe In Nurturing The 
+                  Complete Personality Of A Child - Intellectual, Physical, Emotional, And 
+                  Spiritual. Our Dedicated Team Of Educators Works Tirelessly To Create An 
+                  Environment That Fosters Curiosity, Creativity, And Critical Thinking.
                 </p>
                 <p>
-                  As we prepare our students for the challenges of the 21st century, we 
-                  remain committed to our core values of integrity, discipline, and 
-                  compassion. I invite you to join us in this beautiful journey of 
-                  learning and growth.
+                  As We Prepare Our Students For The Challenges Of The 21st Century, We 
+                  Remain Committed To Our Core Values Of Integrity, Discipline, And 
+                  Compassion. I Invite You To Join Us In This Beautiful Journey Of 
+                  Learning And Growth.
                 </p>
                 <p className="font-semibold text-foreground">
                   Dr. Rajesh Kumar Singh<br />
@@ -167,9 +167,9 @@ const About = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: Award, title: "Excellence", desc: "Striving for the highest standards in everything we do" },
-              { icon: Users, title: "Integrity", desc: "Upholding honesty, ethics, and moral principles" },
-              { icon: Heart, title: "Compassion", desc: "Fostering empathy and care for others" },
+              { icon: Award, title: "Excellence", desc: "Striving For The Highest Standards In Everything We Do" },
+              { icon: Users, title: "Integrity", desc: "Upholding Honesty, Ethics, And Moral Principles" },
+              { icon: Heart, title: "Compassion", desc: "Fostering Empathy And Care For Others" },
             ].map((value, index) => (
               <div key={index} className="text-center text-primary-foreground">
                 <div className="w-20 h-20 mx-auto mb-4 bg-primary-foreground/10 rounded-full flex items-center justify-center">
@@ -181,6 +181,7 @@ const About = () => {
             ))}
           </div>
         </div>
+          <div className="w-full border-t-4 border-accent mt-12"></div>
       </section>
     </Layout>
   );
