@@ -1,5 +1,5 @@
 import Layout from "@/Components/Layout/Layout";
-import principalImage from "@/assets/principal.jpg";
+import principalImage from "@/Assets/Principal.jpg";
 import heroSchool from "@/Assets/Hero-School.png";
 
 const administrationTeam = [
