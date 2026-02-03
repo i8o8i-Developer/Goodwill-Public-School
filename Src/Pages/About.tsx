@@ -1,6 +1,6 @@
 import Layout from "@/Components/Layout/Layout";
 import { BookOpen, Target, Eye, History, Award, Users, Heart } from "lucide-react";
-import principalImage from "@/assets/principal.jpg";
+import principalImage from "@/Assets/Principal.jpg";
 import heroSchool from "@/Assets/Hero-School.png";
 
 const About = () => {
