@@ -39,14 +39,14 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           {/* Logo and School Name */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3 py-2">
             <img 
               src={schoolLogo} 
               alt="Goodwill Public School Logo" 
               className="h-14 w-14 md:h-16 md:w-16 object-contain"
             />
             <div>
-              <h1 className="text-base sm:text-lg md:text-xl font-bold text-primary leading-tight whitespace-nowrap">
+              <h1 className="text-lg md:text-xl font-bold text-primary leading-tight">
                 Goodwill Public School
               </h1>
               <p className="hidden sm:block text-xs md:text-sm text-muted-foreground">

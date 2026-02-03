@@ -24,23 +24,25 @@ const sectionVariants = {
 const Index = () => {
   return (
     <Layout>
-      <HeroSlider />
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants} custom={1}>
+      <div className="-mb-2">
+        <HeroSlider />
+      </div>
+      <motion.div initial="visible" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants} custom={1}>
         <WhyChooseUs />
       </motion.div>
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants} custom={2}>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants} custom={2}>
         <SchoolHighlights />
       </motion.div>
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants} custom={3}>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants} custom={3}>
         <PrincipalMessage />
       </motion.div>
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants} custom={4}>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants} custom={4}>
         <LatestNotices />
       </motion.div>
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants} custom={5}>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants} custom={5}>
         <UpcomingEvents />
       </motion.div>
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={sectionVariants} custom={6}>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants} custom={6}>
         <GalleryPreview />
       </motion.div>
     </Layout>

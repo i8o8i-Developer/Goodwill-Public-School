@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     allowedHosts: [
-      "cavernously-unresembling-dora.ngrok-free.dev"
+      "cavernously-unresembling-dora.ngrok-free.dev",
     ],
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
