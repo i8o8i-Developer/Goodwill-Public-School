@@ -1,0 +1,368 @@
+# Product Requirements Document
+
+## Goodwill Public School Patti Pratapgarh Website
+
+---
+
+## 1. Product Overview
+
+**Product Name:** School Website CMS
+**School Name:** **Goodwill Public School Patti Pratapgarh**
+**School Type:** Indian School (CBSE Pattern)
+**Developed By:** **DurgaAI Solutions**
+
+**Frontend Technology:** React Js
+**Backend Technology:** Node Js With Express
+**Database:** MongoDB
+**Admin Panel:** React Based Admin Dashboard
+**Hosting Environment:** Cloud Based (AWS / Vercel / Netlify)
+
+### Product Vision
+
+To Build A Modern, Trustworthy, And Emotionally Appealing School Website That Reflects Academic Excellence, Moral Values, And Discipline While Being Fully Manageable Through An Admin Panel Without Developer Dependency.
+
+---
+
+## 2. Color Theme And Branding
+
+### Primary Color Palette
+
+* Light Green – Growth, Learning, Positivity
+* Black – Structure, Stability, Readability
+* Yellow – Energy, Achievements, Highlights
+* Red – Alerts, Notices, Call To Actions
+* Blue – Trust, Education, Authority
+
+### Branding Requirement
+
+Footer Branding On All Pages:
+
+> Website Designed And Developed By **DurgaAI Solutions**
+
+---
+
+## 3. Website Structure (Public Pages)
+
+---
+
+## 3.1 Home Page
+
+### Purpose
+
+To Create A Strong First Impression And Build Trust Among Parents And Students.
+
+### Sections
+
+#### Top Information Bar
+
+* School Name
+* Contact Number
+* Email Address
+* ERP Login Link
+* Facebook And WhatsApp Icons
+
+#### Header Section
+
+* School Logo
+* School Name: **Goodwill Public School Patti Pratapgarh**
+* Board Affiliation Details
+* School Address
+
+#### Navigation Menu
+
+* Home
+* About Us
+* Admissions
+* Academics
+* Administration
+* Rules And Regulations
+* Gallery
+* Notices
+* Contact Us
+
+#### Hero Banner Section
+
+* Auto Image Slider (Admin Controlled)
+* School Activities And Achievements
+* Call To Action Buttons
+
+  * Apply For Admission
+  * View Latest Notices
+
+#### Why Choose Us Section
+
+Editable Content From Admin Panel
+
+Sample Content:
+
+* Excellence For All, Excellence From All
+* Value Based Education
+* Safe And Disciplined Environment
+
+#### School Highlights Section
+
+* Experienced Faculty
+* Quality Education
+* Annual Platforms
+* Smart Classrooms
+* Sports And Cultural Activities
+
+#### Latest Notices Section
+
+* Dynamic Notice Display
+* Priority And Expiry Based Notices
+* Highlighted Important Notices
+
+#### Upcoming Events Preview
+
+* Linked With School Calendar
+
+#### Gallery Preview
+
+* Recent Event Images
+
+#### Footer Section
+
+* School Address
+* Phone Number And Email
+* Quick Navigation Links
+* **Embedded Google Maps Location**
+* Branding: Developed By DurgaAI Solutions
+
+---
+
+## 4. Inner Pages Specification
+
+---
+
+## 4.1 About Us Page
+
+* School Introduction
+* Vision And Mission
+* Principal’s Message With Photo
+* School History
+
+All Content Fully Editable From Admin Panel.
+
+---
+
+## 4.2 Administration Page
+
+* Chairman’s Message
+* Principal Details
+* Vice Principal Details
+* Management Committee
+
+Each Entry Includes:
+
+* Photo
+* Name
+* Designation
+* Message
+
+Admin Can Add, Edit, Or Remove Profiles.
+
+---
+
+## 4.3 Academics Page
+
+* Curriculum Overview
+* Class Structure (Nursery To Senior Classes)
+* Subjects Offered
+* Teaching Methodology
+
+---
+
+## 4.4 Teachers Overview Page
+
+* Teacher Profile Cards
+
+  * Photo
+  * Name
+  * Qualification
+  * Subject
+
+Admin Panel Controls:
+
+* Add Teacher
+* Update Teacher
+* Enable Or Disable Teacher Visibility
+
+---
+
+## 4.5 Admissions Page
+
+* Admission Guidelines
+* Eligibility Criteria
+* Important Dates
+
+### Online Admission Form
+
+* Student Name
+* Date Of Birth
+* Class Applying For
+* Parent Details
+* Contact Information
+* Address
+* Document Upload
+
+Admin Can View, Download, And Export Submissions.
+
+---
+
+## 4.6 Notices And Announcements Page
+
+* Categorized Notices
+
+  * Examination
+  * Holidays
+  * Admissions
+* PDF Upload Support
+* Priority Based Display
+* Auto Expiry Option
+
+Fully Managed From Admin Panel.
+
+---
+
+## 4.7 Academic Calendar Page
+
+* Monthly Calendar View
+* Events Including:
+
+  * Examinations
+  * Parent Teacher Meetings
+  * Holidays
+* Highlight Current Date And Events
+
+Admin Controlled Event Management.
+
+---
+
+## 4.8 Gallery Page
+
+* Event Wise Albums
+* Image Optimization
+* Lightbox View
+
+Admin Capabilities:
+
+* Upload Images
+* Create Albums
+* Delete Or Update Images
+
+---
+
+## 4.9 Rules And Regulations Page
+
+* School Discipline Rules
+* Attendance Policy
+* Examination Rules
+* Uniform Guidelines
+
+Content Editable Through Admin Panel.
+
+---
+
+## 4.10 Contact Us Page
+
+* Contact Form
+* School Address
+* Phone And Email
+* **Google Maps Embedded Location**
+* WhatsApp Click To Chat
+
+All Messages Accessible In Admin Panel.
+
+---
+
+## 5. Admin Panel Requirements
+
+---
+
+## 5.1 Admin Authentication
+
+* Secure Login System
+* Role Based Access (Future Ready)
+
+---
+
+## 5.2 Admin Dashboard
+
+Dashboard Overview Displays:
+
+* Total Notices
+* Admission Requests
+* Gallery Images Count
+* Calendar Events
+* Contact Messages
+
+---
+
+## 5.3 Admin Functional Modules
+
+| Module      | Functionality            |
+| ----------- | ------------------------ |
+| Notices     | Create, Update, Delete   |
+| Calendar    | Add And Manage Events    |
+| Teachers    | Manage Teacher Profiles  |
+| Gallery     | Upload And Manage Images |
+| Pages       | Edit Website Content     |
+| Admissions  | View And Export Forms    |
+| Contact     | View User Messages       |
+| Hero Slider | Manage Home Page Banners |
+
+---
+
+## 6. Technical Requirements
+
+### Frontend Requirements
+
+* React Component Based Architecture
+* Mobile First Responsive Design
+* SEO Friendly Structure
+* Fast Loading Performance
+
+### Backend Requirements
+
+* RESTful API Architecture
+* Secure Admin Routes
+* Image Storage Integration (Cloud Based)
+
+---
+
+## 7. Performance And Quality Standards
+
+* Page Load Time Under Three Seconds
+* Mobile And Tablet Optimized
+* Easy Admin Usability
+* No Developer Dependency For Content Updates
+
+---
+
+## 8. Future Enhancements (Optional Scope)
+
+* Student Login Portal
+* Parent Dashboard
+* Online Fee Payment
+* Result Publishing System
+* Attendance Management
+
+---
+
+## 9. Success Metrics
+
+* Increased Parent Engagement
+* Easy Information Accessibility
+* Admin Efficiency Improvement
+* Professional Digital Presence For School
+
+---
+
+Add More BETTER Animations And Transitions To Make The Website More Engaging , 
+
+Create An Academic Calendar Page With Monthly View Showing Exams, Holidays, And Events , 
+
+Add A Teachers Page WWith Photo Gallery And Profiles That Can Be Managed From The Admin Panel ,
+
+Enable Python Backend To Add The Admin Panel With Database For Managing Notices, Admissions, Gallery, And Content Dnamically
