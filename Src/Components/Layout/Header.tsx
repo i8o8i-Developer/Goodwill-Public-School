@@ -45,11 +45,11 @@ const Header = () => {
               alt="Goodwill Public School Logo" 
               className="h-14 w-14 md:h-16 md:w-16 object-contain"
             />
-            <div className="hidden sm:block">
-              <h1 className="text-lg md:text-xl font-bold text-primary leading-tight">
+            <div>
+              <h1 className="text-base sm:text-lg md:text-xl font-bold text-primary leading-tight whitespace-nowrap">
                 Goodwill Public School
               </h1>
-              <p className="text-xs md:text-sm text-muted-foreground">
+              <p className="hidden sm:block text-xs md:text-sm text-muted-foreground">
                 Patti, Pratapgarh | CBSE Affiliated
               </p>
             </div>
@@ -120,20 +120,51 @@ const Header = () => {
         {isMenuOpen && (
           <nav className="lg:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${
-                    location.pathname === item.path
-                      ? "bg-primary text-primary-foreground"
-                      : "text-foreground"
-                  }`}
-                >
-                  {item.name}
-                </Link>
+              <Link
+                to="/"
+                onClick={() => setIsMenuOpen(false)}
+                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+              >
+                Home
+              </Link>
+              <Link
+                to="/admissions"
+                onClick={() => setIsMenuOpen(false)}
+                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/admissions" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+              >
+                Admissions
+              </Link>
+              {navGroups.map((group) => (
+                <div key={group.name} className="mb-2">
+                  <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{group.name}</div>
+                  <div className="flex flex-col gap-1 pl-2">
+                    {group.items.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`px-6 py-2 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === item.path ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
+              <Link
+                to="/academic-calendar"
+                onClick={() => setIsMenuOpen(false)}
+                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/academic-calendar" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+              >
+                Calendar
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => setIsMenuOpen(false)}
+                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/contact" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+              >
+                Contact Us
+              </Link>
             </div>
           </nav>
         )}
