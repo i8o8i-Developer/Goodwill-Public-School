@@ -85,7 +85,7 @@ const AcademicCalendar = () => {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="w-full lg:w-auto"
+              className="w-full lg:w-auto flex justify-center"
             >
               <div className="bg-card rounded-2xl shadow-2xl p-6 border border-border/50">
                 <Calendar
@@ -114,9 +114,9 @@ const AcademicCalendar = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex-1 w-full max-w-2xl"
+              className="flex-1 w-full flex flex-col items-center justify-center"
             >
-              <div className="bg-card rounded-2xl shadow-2xl p-8 border border-border/50 min-h-[400px]">
+              <div className="bg-card rounded-2xl shadow-2xl p-8 border border-border/50 min-h-[400px] w-full flex flex-col items-center">
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/50">
                   <CalendarIcon className="w-7 h-7 text-primary" />
                   <div>
