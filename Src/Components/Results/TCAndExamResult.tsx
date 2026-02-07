@@ -4,6 +4,7 @@ import { Button } from "@/Components/ui/Button";
 import { Input } from "@/Components/ui/Input";
 import { Label } from "@/Components/ui/Label";
 import { toast } from "sonner";
+import { resultsAPI } from "@/Services/Api";
 
 const TCDownloadSection = () => {
   const [studentId, setStudentId] = useState("");
@@ -138,7 +139,7 @@ const TCDownloadSection = () => {
 
 const ExamResultSection = () => {
   const [studentId, setStudentId] = useState("");
-  const [examType, setExamType] = useState("Annual");
+  const [examType, setExamType] = useState("PT1");
   type ExamResult = {
     name: string;
     id: string;
@@ -150,8 +151,9 @@ const ExamResultSection = () => {
     rank: number;
   };
   const [result, setResult] = useState<ExamResult | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!studentId) {
       toast.error("Please Enter A Valid Student ID");
@@ -161,29 +163,39 @@ const ExamResultSection = () => {
       toast.error("Please select an exam type");
       return;
     }
-    if (studentId === "123456" && examType === "Annual") {
-      setResult({
-        name: "Temp Student",
-        id: "123456",
-        class: "10",
-        section: "A",
-        marks: {
-          English: 88,
-          Math: 92,
-          Science: 85,
-          Social: 90,
-          Hindi: 80
-        },
-        percentage: 87,
-        grade: "A",
-        rank: 5
-      });
-      toast.success("Result Found For Student ID 123456 (Annual)");
-    } else {
+
+    setLoading(true);
+    try {
+      const apiResult = await resultsAPI.getByStudentAndExam(studentId, examType);
+      
+      if (apiResult) {
+        // Parse marks_json if it's a string
+        const marks = typeof apiResult.marks_json === 'string' 
+          ? JSON.parse(apiResult.marks_json) 
+          : {};
+        
+        setResult({
+          name: apiResult.student_name,
+          id: apiResult.student_id,
+          class: apiResult.class,
+          section: apiResult.section || "N/A",
+          marks,
+          percentage: apiResult.percentage,
+          grade: apiResult.grade,
+          rank: apiResult.rank
+        });
+        toast.success(`Result Found For ${apiResult.student_name}`);
+      } else {
+        setResult(null);
+        toast.error("No Result Found For This Student ID and Exam Type");
+      }
+    } catch (error) {
+      console.error("Error Fetching Result:", error);
       setResult(null);
-      toast.error("No Result Found For This Student ID and Exam Type");
+      toast.error("Failed To Fetch Result. Please Try Again.");
+    } finally {
+      setLoading(false);
     }
-    setStudentId("");
   };
 
   return (
@@ -228,16 +240,16 @@ const ExamResultSection = () => {
                   onChange={(e) => setExamType(e.target.value)}
                   className="w-full text-lg py-4 px-4 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition bg-background text-foreground appearance-none"
                 >
-                  <option value="Annual">Annual</option>
                   <option value="PT1">PT1</option>
                   <option value="PT2">PT2</option>
                   <option value="Half-Yearly">Half-Yearly</option>
-                  <option value="Other">Other</option>
+                  <option value="Annual">Annual</option>
+                  <option value="Final">Final</option>
                 </select>
               </div>
-              <Button type="submit" size="lg" className="w-full md:w-auto gap-2 text-base px-8 py-6">
+              <Button type="submit" size="lg" className="w-full md:w-auto gap-2 text-base px-8 py-6" disabled={loading}>
                 <Search className="h-5 w-5" />
-                View Result
+                {loading ? "Searching..." : "View Result"}
               </Button>
             </form>
             <p className="text-sm text-muted-foreground mt-6 flex items-center gap-2">

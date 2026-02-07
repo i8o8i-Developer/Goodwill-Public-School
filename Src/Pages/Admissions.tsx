@@ -8,6 +8,7 @@ import { CalendarDays, FileText, CheckCircle, Clock, GraduationCap } from "lucid
 import heroSchool from "@/Assets/Hero-School.png";
 import { useState } from "react";
 import { toast } from "sonner";
+import { admissionsAPI } from "@/Services/Api";
 
 const Admissions = () => {
   const [formData, setFormData] = useState({
@@ -20,20 +21,44 @@ const Admissions = () => {
     email: "",
     address: "",
   });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Application Submitted Successfully! We Will Contact You Soon.");
-    setFormData({
-      studentName: "",
-      dob: "",
-      classApplying: "",
-      parentName: "",
-      relation: "",
-      phone: "",
-      email: "",
-      address: "",
-    });
+    setSubmitting(true);
+    try {
+      // Map Frontend Fields To Backend Expected Fields
+      const payload = {
+        student_name: formData.studentName,
+        dob: formData.dob,
+        class_name: formData.classApplying,
+        father_name: formData.relation === "father" ? formData.parentName : "",
+        mother_name: formData.relation === "mother" ? formData.parentName : "",
+        contact: formData.phone,
+        email: formData.email,
+        address: formData.address,
+      };
+      await fetch("http://localhost:8000/api/admissions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      toast.success("Application Submitted Successfully! We Will Contact You Soon.");
+      setFormData({
+        studentName: "",
+        dob: "",
+        classApplying: "",
+        parentName: "",
+        relation: "",
+        phone: "",
+        email: "",
+        address: "",
+      });
+    } catch (error) {
+      toast.error("Failed To Submit Application. Please Try Again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -27,6 +27,19 @@ import ExamResult from "./Pages/ExamResult";
 import AppointmentPage from "./Pages/Appointment";
 import ManagementSpeaksPage from "./Pages/ManagementSpeaks";
 
+// Admin Imports
+import AdminLogin from "./Pages/Admin/Login";
+import AdminLayout from "./Components/Layout/AdminLayout";
+import AdminDashboard from "./Pages/Admin/Dashboard";
+import AdminStudents from "./Pages/Admin/Students";
+import AdminTeachers from "./Pages/Admin/Teachers";
+import AdminNotices from "./Pages/Admin/Notices";
+import AdminGallery from "./Pages/Admin/Gallery";
+import AdminResults from "./Pages/Admin/Results";
+import AdminTCRequests from "./Pages/Admin/TCRequests";
+import AdminAppointments from "./Pages/Admin/Appointments";
+import AdminAdmissions from "./Pages/Admin/Admissions";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -55,6 +68,21 @@ const App = () => (
           <Route path="/examresult" element={<ExamResult />} />
           <Route path="/appointment" element={<AppointmentPage />} />
           <Route path="/management-speaks" element={<ManagementSpeaksPage />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="students" element={<AdminStudents />} />
+            <Route path="teachers" element={<AdminTeachers />} />
+            <Route path="notices" element={<AdminNotices />} />
+            <Route path="gallery" element={<AdminGallery />} />
+            <Route path="results" element={<AdminResults />} />
+            <Route path="tc-requests" element={<AdminTCRequests />} />
+            <Route path="appointments" element={<AdminAppointments />} />
+            <Route path="admissions" element={<AdminAdmissions />} />
+          </Route>
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

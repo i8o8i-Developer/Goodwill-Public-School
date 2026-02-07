@@ -1,47 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/Components/Layout/Layout";
 import heroSchool from "@/Assets/Hero-School.png";
-import heroClassroom from "@/Assets/Hero-Classroom.png";
-import heroSports from "@/Assets/Hero-Sports.png";
-import culturalprogram from "@/Assets/Cultural-Program.png";  
-import annualfunction from "@/Assets/Annual-Function.png";
-import sciencelab from "@/Assets/Science-Lab.png";
 import { X } from "lucide-react";
-
-const galleryData = [
-  {
-    category: "Campus",
-    images: [
-      { src: heroSchool, title: "Campus View" },
-    ],
-  },
-  {
-    category: "Academics",
-    images: [
-      { src: heroClassroom, title: "Smart Classroom" },
-      { src: sciencelab, title: "Science Lab" },
-    ],
-  },
-  {
-    category: "Events",
-    images: [
-      { src: annualfunction, title: "Annual Function" },
-      { src: culturalprogram, title: "Cultural Program" },
-    ],
-  },
-];
+import { galleryAPI, GalleryImage } from "@/Services/Api";
 
 const Gallery = () => {
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<{ src: string; title: string } | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
-  const categories = ["All", ...galleryData.map((g) => g.category)];
+  useEffect(() => {
+    async function fetchImages() {
+      try {
+        const data = await galleryAPI.getAllPublic();
+        setImages(data);
+      } catch (error) {
+        console.error("Failed To Fetch Gallery Images", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchImages();
+  }, []);
+
+  const categories = ["All", ...Array.from(new Set(images.map(img => img.category)))];
   const filteredImages =
     activeCategory === "All"
-      ? galleryData.flatMap((g) => g.images.map((img) => ({ ...img, category: g.category })))
-      : galleryData
-          .find((g) => g.category === activeCategory)
-          ?.images.map((img) => ({ ...img, category: activeCategory })) || [];
+      ? images
+      : images.filter(img => img.category === activeCategory);
 
   return (
     <Layout>
@@ -83,10 +70,10 @@ const Gallery = () => {
               <div
                 key={index}
                 className="group relative aspect-square overflow-hidden rounded-lg cursor-pointer"
-                onClick={() => setSelectedImage(image)}
+                onClick={() => setSelectedImage({ src: image.image_url, title: image.title })}
               >
                 <img
-                  src={image.src}
+                  src={image.image_url}
                   alt={image.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />

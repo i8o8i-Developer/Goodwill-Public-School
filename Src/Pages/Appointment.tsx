@@ -6,6 +6,7 @@ import { Label } from "@/Components/ui/Label";
 import { Calendar, Clock, MapPin, Phone, Mail, User, MessageSquare, Send, CheckCircle } from "lucide-react";
 import heroSchool from "@/Assets/Hero-School.png";
 import { useState } from "react";
+import { appointmentsAPI } from "@/Services/Api";
 import { toast } from "sonner";
 
 const Appointment = () => {
@@ -18,17 +19,30 @@ const Appointment = () => {
     purpose: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Appointment Request Submitted! We Will Contact You Soon To Confirm.");
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      date: "",
-      time: "",
-      purpose: "",
-    });
+    try {
+      await appointmentsAPI.create({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        date: formData.date,
+        time: formData.time,
+        purpose: formData.purpose,
+        status: "Pending"
+      });
+      toast.success("Appointment Request Submitted! We Will Contact You Soon To Confirm.");
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        date: "",
+        time: "",
+        purpose: "",
+      });
+    } catch (error) {
+      toast.error("Failed To Submit Appointment. Please Try Again.");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

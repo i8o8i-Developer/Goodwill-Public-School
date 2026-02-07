@@ -103,6 +103,12 @@ const Header = () => {
             >
               Contact Us
             </Link>
+            <Link
+              to="/admin/login"
+              className="px-3 py-2 text-sm font-medium transition-colors rounded-md bg-amber-500 text-white hover:bg-amber-600"
+            >
+              Admin
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -167,6 +173,13 @@ const Header = () => {
                 className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/contact" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
               >
                 Contact Us
+              </Link>
+              <Link
+                to="/admin/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="px-4 py-3 text-sm font-medium transition-colors rounded-md bg-amber-500 text-white hover:bg-amber-600"
+              >
+                Admin
               </Link>
             </div>
           </nav>
