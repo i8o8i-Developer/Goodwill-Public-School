@@ -46,6 +46,8 @@ class Notice(Base):
     content = Column(Text)
     date = Column(Date)
     status = Column(String, default="Active")
+    category = Column(String, default="General")
+    attachment = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class GalleryImage(Base):

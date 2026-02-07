@@ -102,6 +102,7 @@ export interface Notice {
   date: string;
   status: string;
   category: string;
+  attachment?: string;
 }
 
 export const noticesAPI = {
@@ -111,6 +112,21 @@ export const noticesAPI = {
     apiCall<Notice>('/notices', {
       method: 'POST',
       body: JSON.stringify(notice),
+      headers: { 'Content-Type': 'application/json' },
+    }),
+  update: (id: number, notice: Partial<Notice>) =>
+    apiCall<{ message: string }>(`/notices/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(notice),
+      headers: { 'Content-Type': 'application/json' },
+    }),
+  createWithAttachment: (formData: FormData) =>
+    fetch(`${API_BASE_URL}/notices/upload`, {
+      method: 'POST',
+      body: formData,
+    }).then(async res => {
+      if (!res.ok) throw new Error((await res.json()).detail || 'Failed to upload');
+      return res.json();
     }),
   delete: (id: number) =>
     apiCall<{ message: string }>(`/notices/${id}`, {

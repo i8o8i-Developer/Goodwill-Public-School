@@ -1,33 +1,22 @@
 from fastapi import Body
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, UploadFile, File, Form
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import List, Optional
+import os
 from datetime import datetime, date
 import json
 from passlib.context import CryptContext
-
 from .Database import (
     get_db, Student, Teacher, Notice, GalleryImage, ExamResult,
     TCRequest, Appointment, Admission, Admin, engine, Base
 )
-
 # Create Tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Goodwill School Admin API")
-
-# Enable CORS For All Origins (For Development)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Or ["http://localhost:8080"] For Stricter Security
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,9 +24,39 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Password Hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "Uploads")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+app.mount("/Static", StaticFiles(directory=UPLOAD_DIR), name="Static")
+@app.post("/api/notices/upload")
+def create_notice_with_attachment(
+    title: str = Form(...),
+    content: str = Form(...),
+    category: str = Form(...),
+    status: str = Form(...),
+    date: str = Form(...),
+    attachment: UploadFile = File(None),
+    db: Session = Depends(get_db)
+):
+    attachment_path = None
+    if attachment:
+        filename = f"notice_{int(datetime.utcnow().timestamp())}_{attachment.filename}"
+        file_path = os.path.join(UPLOAD_DIR, filename)
+        with open(file_path, "wb") as f:
+            f.write(attachment.file.read())
+        attachment_path = filename
+    db_notice = Notice(
+        title=title,
+        content=content,
+        category=category,
+        status=status,
+        date=datetime.strptime(date, "%Y-%m-%d").date(),
+        attachment=attachment_path
+    )
+    db.add(db_notice)
+    db.commit()
+    db.refresh(db_notice)
+    return {"message": "Notice Created", "id": db_notice.id, "attachment": attachment_path}
 
 # Pydantic Models
 class StudentCreate(BaseModel):
@@ -250,18 +269,47 @@ def delete_teacher(teacher_id: str, db: Session = Depends(get_db)):
 # ====================
 # NOTICES ENDPOINTS
 # ====================
+
+from pydantic import BaseModel
+class NoticeUpdate(BaseModel):
+    title: str = None
+    content: str = None
+    category: str = None
+    status: str = None
+    date: str = None
+
 @app.get("/api/notices")
 def get_notices(db: Session = Depends(get_db)):
     notices = db.query(Notice).order_by(Notice.date.desc()).all()
-    return [{"id": n.id, "title": n.title, "content": n.content, 
-             "date": n.date.isoformat(), "status": n.status} for n in notices]
+    return [{
+        "id": n.id,
+        "title": n.title,
+        "content": n.content,
+        "category": getattr(n, "category", None),
+        "status": n.status,
+        "date": n.date.isoformat() if n.date else None,
+        "attachment": getattr(n, "attachment", None)
+    } for n in notices]
 
-@app.post("/api/notices")
-def create_notice(notice: NoticeCreate, db: Session = Depends(get_db)):
-    db_notice = Notice(**notice.dict(), status="Active")
-    db.add(db_notice)
+@app.patch("/api/notices/{notice_id}")
+def update_notice(notice_id: int, update: NoticeUpdate, db: Session = Depends(get_db)):
+    notice = db.query(Notice).filter(Notice.id == notice_id).first()
+    if not notice:
+        raise HTTPException(status_code=404, detail="Notice Not Found")
+    update_data = update.dict(exclude_unset=True)
+    # Convert date string to date object if present
+    if "date" in update_data and isinstance(update_data["date"], str):
+        from datetime import datetime
+        try:
+            update_data["date"] = datetime.strptime(update_data["date"], "%Y-%m-%d").date()
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD.")
+    for key, value in update_data.items():
+        setattr(notice, key, value)
     db.commit()
-    return {"message": "Notice Created"}
+    db.refresh(notice)
+    return {"message": "Notice Updated"}
+
 
 @app.delete("/api/notices/{notice_id}")
 def delete_notice(notice_id: int, db: Session = Depends(get_db)):
@@ -477,7 +525,18 @@ def get_public_teachers(db: Session = Depends(get_db)):
 @app.get("/api/public/notices")
 def get_public_notices(db: Session = Depends(get_db)):
     notices = db.query(Notice).filter(Notice.status == "Active").order_by(Notice.date.desc()).limit(5).all()
-    return [{"title": n.title, "date": n.date.isoformat(), "content": n.content} for n in notices]
+    return [
+        {
+            "id": n.id,
+            "title": n.title,
+            "content": n.content,
+            "date": n.date.isoformat() if n.date else None,
+            "status": n.status,
+            "category": n.category if hasattr(n, "category") else None,
+            "attachment": n.attachment if hasattr(n, "attachment") else None
+        }
+        for n in notices
+    ]
 
 @app.get("/api/public/gallery")
 def get_public_gallery(db: Session = Depends(get_db)):

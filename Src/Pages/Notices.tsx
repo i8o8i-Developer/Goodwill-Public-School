@@ -33,6 +33,7 @@ const Notices = () => {
   };
 
   const getCategoryColor = (category: string) => {
+    if (!category) return "secondary";
     const lower = category.toLowerCase();
     if (lower === "examination" || lower === "exam") return "destructive";
     if (lower === "event") return "default";
@@ -71,16 +72,35 @@ const Notices = () => {
                 >
                   <div className="p-6">
                     <div className="flex flex-wrap items-center gap-2 mb-3">
-                      <Badge variant={getCategoryColor(notice.category) as "default" | "secondary" | "destructive" | "outline"}>{notice.category}</Badge>
+                      {/* Category Badge */}
+                      {notice.category && (
+                        <Badge variant={getCategoryColor(notice.category) as "default" | "secondary" | "destructive" | "outline"}>
+                          {notice.category}
+                        </Badge>
+                      )}
+                      {/* Status Badge */}
+                      {notice.status && (
+                        <Badge variant={notice.status.toLowerCase() === "active" ? "outline" : "secondary"} className="gap-1">
+                          <FileText className="h-3 w-3" />
+                          {notice.status.charAt(0).toUpperCase() + notice.status.slice(1)}
+                        </Badge>
+                      )}
+                      {/* Date */}
                       <span className="text-sm text-muted-foreground flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {formatDate(notice.date)}
                       </span>
-                      {notice.status === "published" && (
-                        <Badge variant="outline" className="gap-1">
-                          <FileText className="h-3 w-3" />
-                          Published
-                        </Badge>
+                      {/* Attachment Download */}
+                      {notice.attachment && (
+                        <a
+                          href={`http://localhost:8000/Static/${notice.attachment}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-2 text-primary underline flex items-center gap-1"
+                          download
+                        >
+                          <Download className="h-4 w-4" /> Attachment
+                        </a>
                       )}
                     </div>
                     <h3 className="text-xl font-bold text-card-foreground mb-3">{notice.title}</h3>
