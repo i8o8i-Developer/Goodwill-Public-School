@@ -121,8 +121,8 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="lg:hidden py-4 border-t border-border">
-            <div className="flex flex-col gap-1">
+          <nav className="lg:hidden py-4 border-t border-border overflow-y-auto max-h-[calc(100vh-120px)]">
+            <div className="flex flex-col gap-1 pb-6">
               <Link
                 to="/"
                 onClick={() => setIsMenuOpen(false)}

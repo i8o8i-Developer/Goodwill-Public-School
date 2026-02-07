@@ -16,20 +16,20 @@ const disclosureData = [
   {
     title: "B. DOCUMENTS AND INFORMATION",
     items: [
-      { label: "Affiliation Letter", value: <a href="#">View Document</a> },
-      { label: "NOC From State Govt.", value: <a href="#">View Document</a> },
-      { label: "Recognition Certificate", value: <a href="#">View Document</a> },
-      { label: "Building Safety Certificate", value: <a href="#">View Document</a> },
-      { label: "Fire Safety Certificate", value: <a href="#">View Document</a> },
-      { label: "Health & Sanitation Certificate", value: <a href="#">View Document</a> },
+      { label: "Affiliation Letter", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
+      { label: "NOC From State Govt.", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
+      { label: "Recognition Certificate", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
+      { label: "Building Safety Certificate", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
+      { label: "Fire Safety Certificate", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
+      { label: "Health & Sanitation Certificate", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
     ],
   },
   {
     title: "C. RESULT AND ACADEMICS",
     items: [
-      { label: "Academic Calendar", value: <a href="/academic-calendar">View</a> },
-      { label: "List Of Books", value: <a href="#">View Document</a> },
-      { label: "Annual Report", value: <a href="#">View Document</a> },
+      { label: "Academic Calendar", value: <a href="/academic-calendar" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View</a> },
+      { label: "List Of Books", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
+      { label: "Annual Report", value: <a href="#" className="inline-block bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-md shadow-sm hover:bg-primary/80 transition">View Document</a> },
     ],
   },
 ];
