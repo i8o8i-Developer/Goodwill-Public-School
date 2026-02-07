@@ -19,6 +19,13 @@ import AcademicCalendar from "./Pages/AcademicCalendar";
 import Teachers from "./Pages/Teachers";
 import MandatoryPublicDisclosure from "./Pages/MandatoryPublicDisclosure";
 import ComingSoon from "./Pages/ComingSoon";
+import FacilitiesPage from "./Pages/Facilities";
+import FeeAndRulesPage from "./Pages/FeeAndRules";
+import TCAndResultPage from "./Pages/TCAndResult";
+import TCDownload from "./Pages/TCDownload";
+import ExamResult from "./Pages/ExamResult";
+import AppointmentPage from "./Pages/Appointment";
+import ManagementSpeaksPage from "./Pages/ManagementSpeaks";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +49,12 @@ const App = () => (
           <Route path="/teachers" element={<Teachers />} />
           <Route path="/mandatory-public-disclosure" element={<MandatoryPublicDisclosure />} />
           <Route path="/erp/login" element={<ComingSoon />} />
+          <Route path="/facilities" element={<FacilitiesPage />} />
+          <Route path="/fee-and-rules" element={<FeeAndRulesPage />} />
+          <Route path="/tcdownload" element={<TCDownload />} />
+          <Route path="/examresult" element={<ExamResult />} />
+          <Route path="/appointment" element={<AppointmentPage />} />
+          <Route path="/management-speaks" element={<ManagementSpeaksPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

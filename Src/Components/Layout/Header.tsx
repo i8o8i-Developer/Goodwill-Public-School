@@ -5,25 +5,30 @@ import schoolLogo from "@/Assets/School-Logo.png";
 
 const navGroups = [
   {
+    name: "Admissions",
+    items: [
+      { name: "Online Admission", path: "/admissions" },
+      { name: "Appointments", path: "/appointment" },
+      { name: "Fee & Rules", path: "/fee-and-rules" },
+    ],
+  },
+  {
     name: "Academics",
     items: [
       { name: "Academics", path: "/academics" },
-      { name: "Teachers", path: "/teachers" },
+      { name: "Facilities", path: "/facilities" },
+      { name: "Gallery", path: "/gallery" },
+      { name: "Notices", path: "/notices" },
+      { name: "Calendar", path: "/academic-calendar" },
     ],
   },
   {
     name: "School",
     items: [
+      { name: "Management Speaks", path: "/management-speaks" },
+      { name: "Teachers", path: "/teachers" },
       { name: "About Us", path: "/about" },
       { name: "Administration", path: "/administration" },
-      { name: "Rules & Regulations", path: "/rules" },
-    ],
-  },
-  {
-    name: "More",
-    items: [
-      { name: "Gallery", path: "/gallery" },
-      { name: "Notices", path: "/notices" },
     ],
   },
 ];
@@ -61,12 +66,6 @@ const Header = () => {
             >
               Home
             </Link>
-            <Link
-              to="/admissions"
-              className={`px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-secondary hover:text-secondary-foreground ${location.pathname === "/admissions" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
-            >
-              Admissions
-            </Link>
             {navGroups.map((group) => (
               <div key={group.name} className="relative group">
                 <button className="px-3 py-2 text-sm font-medium flex items-center gap-1 rounded-md hover:bg-secondary hover:text-secondary-foreground text-foreground">
@@ -87,10 +86,16 @@ const Header = () => {
               </div>
             ))}
             <Link
-              to="/academic-calendar"
-              className={`px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-secondary hover:text-secondary-foreground ${location.pathname === "/academic-calendar" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+              to="/tcdownload"
+              className={`px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-secondary hover:text-secondary-foreground ${location.pathname === "/tcdownload" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
             >
-              Calendar
+              TC Download
+            </Link>
+            <Link
+              to="/examresult"
+              className={`px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-secondary hover:text-secondary-foreground ${location.pathname === "/examresult" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+            >
+              Exam Result
             </Link>
             <Link
               to="/contact"
@@ -125,13 +130,6 @@ const Header = () => {
               >
                 Home
               </Link>
-              <Link
-                to="/admissions"
-                onClick={() => setIsMenuOpen(false)}
-                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/admissions" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
-              >
-                Admissions
-              </Link>
               {navGroups.map((group) => (
                 <div key={group.name} className="mb-2">
                   <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{group.name}</div>
@@ -150,11 +148,18 @@ const Header = () => {
                 </div>
               ))}
               <Link
-                to="/academic-calendar"
+                to="/tcdownload"
                 onClick={() => setIsMenuOpen(false)}
-                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/academic-calendar" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/tcdownload" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
               >
-                Calendar
+                TC Download
+              </Link>
+              <Link
+                to="/examresult"
+                onClick={() => setIsMenuOpen(false)}
+                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/examresult" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+              >
+                Exam Result
               </Link>
               <Link
                 to="/contact"
