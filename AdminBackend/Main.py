@@ -9,6 +9,8 @@ import os
 from datetime import datetime, date
 import json
 from passlib.context import CryptContext
+from dotenv import load_dotenv
+import os
 from .Database import (
     get_db, Student, Teacher, Notice, GalleryImage, ExamResult,
     TCRequest, Appointment, Admission, Admin, CalendarEvent, FeeRule, ContactMessage, engine, Base
@@ -25,6 +27,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "Uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/Static", StaticFiles(directory=UPLOAD_DIR), name="Static")
@@ -158,20 +163,22 @@ class AdminLogin(BaseModel):
     email: str
     password: str
 
-# Initialize Demo Admin
-def init_demo_admin(db: Session):
-    admin = db.query(Admin).filter(Admin.email == "admin@goodwill.edu.in").first()
-    if not admin:
-        hashed = pwd_context.hash("admin123")
-        admin = Admin(email="admin@goodwill.edu.in", hashed_password=hashed, name="Admin")
-        db.add(admin)
-        db.commit()
+# Initialize Admin
+def init_admin(db: Session):
+    # Create admin from .env if not exists
+    if ADMIN_EMAIL and ADMIN_PASSWORD:
+        admin = db.query(Admin).filter(Admin.email == ADMIN_EMAIL).first()
+        if not admin:
+            hashed = pwd_context.hash(ADMIN_PASSWORD)
+            admin = Admin(email=ADMIN_EMAIL, hashed_password=hashed, name="Admin")
+            db.add(admin)
+            db.commit()
 
 # Startup Event
 @app.on_event("startup")
 def startup_event():
     db = next(get_db())
-    init_demo_admin(db)
+    init_admin(db)
 
 # Root
 @app.get("/")

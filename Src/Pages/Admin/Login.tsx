@@ -84,13 +84,7 @@ const AdminLogin = () => {
           </Button>
         </form>
 
-        <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg">
-          <p className="text-sm text-muted-foreground text-center">
-            <strong>Demo Credentials :</strong><br />
-            Email : admin@goodwill.edu.in<br />
-            Password : admin123
-          </p>
-        </div>
+        {/* No Demo Credentials Or Hints Shown. Only Real Error Handling. */}
       </Card>
     </div>
   );

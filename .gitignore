@@ -28,3 +28,4 @@ __pycache__
 School.db
 AdminBackend/Uploads/*
 !AdminBackend/Uploads/.gitkeep
+.venv
