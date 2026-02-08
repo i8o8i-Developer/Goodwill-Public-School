@@ -68,21 +68,28 @@ const Notices = () => {
               noticesData.map((notice) => (
                 <div
                   key={notice.id}
-                  className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                  className={`bg-card rounded-lg overflow-hidden hover:shadow-lg transition-all ${
+                    notice.status?.toLowerCase() === "important" 
+                      ? "border-2 border-red-500 dark:border-red-600" 
+                      : "border border-border"
+                  }`}
                 >
                   <div className="p-6">
                     <div className="flex flex-wrap items-center gap-2 mb-3">
+                      {/* Status Badge */}
+                      {notice.status && (
+                        <Badge 
+                          variant={notice.status.toLowerCase() === "important" ? "destructive" : "outline"} 
+                          className="gap-1 font-medium"
+                        >
+                          {notice.status.toLowerCase() === "important" && <AlertTriangle className="h-3 w-3" />}
+                          {notice.status.charAt(0).toUpperCase() + notice.status.slice(1)}
+                        </Badge>
+                      )}
                       {/* Category Badge */}
                       {notice.category && (
                         <Badge variant={getCategoryColor(notice.category) as "default" | "secondary" | "destructive" | "outline"}>
                           {notice.category}
-                        </Badge>
-                      )}
-                      {/* Status Badge */}
-                      {notice.status && (
-                        <Badge variant={notice.status.toLowerCase() === "active" ? "outline" : "secondary"} className="gap-1">
-                          <FileText className="h-3 w-3" />
-                          {notice.status.charAt(0).toUpperCase() + notice.status.slice(1)}
                         </Badge>
                       )}
                       {/* Date */}
@@ -90,21 +97,22 @@ const Notices = () => {
                         <Calendar className="h-3 w-3" />
                         {formatDate(notice.date)}
                       </span>
-                      {/* Attachment Download */}
-                      {notice.attachment && (
-                        <a
-                          href={`http://localhost:8000/Static/${notice.attachment}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="ml-2 text-primary underline flex items-center gap-1"
-                          download
-                        >
-                          <Download className="h-4 w-4" /> Attachment
-                        </a>
-                      )}
                     </div>
                     <h3 className="text-xl font-bold text-card-foreground mb-3">{notice.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{notice.content}</p>
+                    <p className="text-muted-foreground leading-relaxed mb-4">{notice.content}</p>
+                    {/* Attachment Download Button */}
+                    {notice.attachment && (
+                      <a
+                        href={`http://localhost:8000/Static/${notice.attachment}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition-colors"
+                      >
+                        <Download className="h-4 w-4" />
+                        Download Attachment
+                      </a>
+                    )}
                   </div>
                 </div>
               ))

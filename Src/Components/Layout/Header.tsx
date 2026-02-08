@@ -86,10 +86,10 @@ const Header = () => {
               </div>
             ))}
             <Link
-              to="/tcdownload"
-              className={`px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-secondary hover:text-secondary-foreground ${location.pathname === "/tcdownload" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+              to="/downloads"
+              className={`px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-secondary hover:text-secondary-foreground ${location.pathname === "/downloads" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
             >
-              TC Download
+              Downloads
             </Link>
             <Link
               to="/examresult"
@@ -154,11 +154,11 @@ const Header = () => {
                 </div>
               ))}
               <Link
-                to="/tcdownload"
+                to="/downloads"
                 onClick={() => setIsMenuOpen(false)}
-                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/tcdownload" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
+                className={`px-4 py-3 text-sm font-medium transition-colors rounded-md hover:bg-secondary ${location.pathname === "/downloads" ? "bg-primary text-primary-foreground" : "text-foreground"}`}
               >
-                TC Download
+                Downloads
               </Link>
               <Link
                 to="/examresult"

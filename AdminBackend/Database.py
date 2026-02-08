@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./School.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./AdminBackend/Database.db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -35,7 +35,8 @@ class Teacher(Base):
     subject = Column(String)
     qualification = Column(String)
     experience = Column(String)
-    contact = Column(String)
+    contact = Column(String, nullable=True)
+    email = Column(String, nullable=True)
     photo = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -83,6 +84,37 @@ class TCRequest(Base):
     reason = Column(Text)
     request_date = Column(Date)
     status = Column(String, default="Pending")
+    tc_document = Column(String, nullable=True)  # TC attachment for approved requests
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class CalendarEvent(Base):
+    __tablename__ = "calendar_events"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    description = Column(Text, nullable=True)
+    event_date = Column(Date)
+    event_type = Column(String, default="General")  # General, Holiday, Exam, etc.
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class FeeRule(Base):
+    __tablename__ = "fee_rules"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    description = Column(Text)
+    category = Column(String, default="Fee")  # Fee or Rule
+    amount = Column(String, nullable=True)  # For fee entries
+    attachment = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class ContactMessage(Base):
+    __tablename__ = "contact_messages"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    email = Column(String)
+    phone = Column(String, nullable=True)
+    subject = Column(String)
+    message = Column(Text)
+    status = Column(String, default="Unread")  # Unread, Read, Replied
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class Appointment(Base):

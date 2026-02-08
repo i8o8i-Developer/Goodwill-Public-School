@@ -22,7 +22,7 @@ import ComingSoon from "./Pages/ComingSoon";
 import FacilitiesPage from "./Pages/Facilities";
 import FeeAndRulesPage from "./Pages/FeeAndRules";
 import TCAndResultPage from "./Pages/TCAndResult";
-import TCDownload from "./Pages/TCDownload";
+import Downloads from "./Pages/Downloads";
 import ExamResult from "./Pages/ExamResult";
 import AppointmentPage from "./Pages/Appointment";
 import ManagementSpeaksPage from "./Pages/ManagementSpeaks";
@@ -39,6 +39,9 @@ import AdminResults from "./Pages/Admin/Results";
 import AdminTCRequests from "./Pages/Admin/TCRequests";
 import AdminAppointments from "./Pages/Admin/Appointments";
 import AdminAdmissions from "./Pages/Admin/Admissions";
+import AdminCalendarEvents from "./Pages/Admin/CalendarEvents";
+import AdminFeeRules from "./Pages/Admin/FeeRules";
+import AdminContactMessages from "./Pages/Admin/ContactMessages";
 
 const queryClient = new QueryClient();
 
@@ -64,7 +67,8 @@ const App = () => (
           <Route path="/erp/login" element={<ComingSoon />} />
           <Route path="/facilities" element={<FacilitiesPage />} />
           <Route path="/fee-and-rules" element={<FeeAndRulesPage />} />
-          <Route path="/tcdownload" element={<TCDownload />} />
+          <Route path="/downloads" element={<Downloads />} />
+          <Route path="/tcdownload" element={<Downloads />} />
           <Route path="/examresult" element={<ExamResult />} />
           <Route path="/appointment" element={<AppointmentPage />} />
           <Route path="/management-speaks" element={<ManagementSpeaksPage />} />
@@ -81,6 +85,9 @@ const App = () => (
             <Route path="tc-requests" element={<AdminTCRequests />} />
             <Route path="appointments" element={<AdminAppointments />} />
             <Route path="admissions" element={<AdminAdmissions />} />
+            <Route path="calendar-events" element={<AdminCalendarEvents />} />
+            <Route path="fee-rules" element={<AdminFeeRules />} />
+            <Route path="contact-messages" element={<AdminContactMessages />} />
           </Route>
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

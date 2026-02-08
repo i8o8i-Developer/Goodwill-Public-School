@@ -1,40 +1,39 @@
 import Layout from "@/Components/Layout/Layout";
 import { Calendar } from "@/Components/ui/Calendar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar as CalendarIcon, GraduationCap, PartyPopper, Users, Briefcase } from "lucide-react";
 
-// Example Events Data
-const initialEvents = [
-  {
-    date: new Date("2026-02-10").toLocaleDateString('en-CA'),
-    title: "Annual Exam - Class X",
-    type: "Exam",
-    icon: "exam"
-  },
-  {
-    date: new Date("2026-02-15").toLocaleDateString('en-CA'),
-    title: "Sports Day",
-    type: "Event",
-    icon: "event"
-  },
-  {
-    date: new Date("2026-02-20").toLocaleDateString('en-CA'),
-    title: "Holiday - Guru Ravidas Jayanti",
-    type: "Holiday",
-    icon: "holiday"
-  },
-  {
-    date: new Date("2026-02-25").toLocaleDateString('en-CA'),
-    title: "Parent-Teacher Meeting",
-    type: "Meeting",
-    icon: "meeting"
-  },
-];
+interface CalendarEvent {
+  id: number;
+  title: string;
+  description?: string;
+  event_date: string;
+  event_type: string;
+}
 
 const AcademicCalendar = () => {
   const [selected, setSelected] = useState<Date | undefined>(undefined);
-  const [eventList] = useState(initialEvents);
+  const [eventList, setEventList] = useState<CalendarEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/public/calendar-events');
+      if (response.ok) {
+        const data = await response.json();
+        setEventList(data);
+      }
+    } catch (error) {
+      console.error('Failed To Fetch Events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Get Selected Date As String For Comparison
   const selectedDate = selected ? selected.toLocaleDateString('en-CA') : null;
@@ -44,14 +43,15 @@ const AcademicCalendar = () => {
     ? selected.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     : "Select a date";
   
-  // Fix: Use local Date String For Comparison
+  // Filter Events For Selected Date
   const dayEvents = selectedDate
-    ? eventList.filter(e => e.date === selectedDate)
+    ? eventList.filter(e => e.event_date === selectedDate)
     : [];
 
   // Get Icon For Event Type
   const getEventIcon = (iconType: string) => {
-    switch(iconType) {
+    const type = iconType.toLowerCase();
+    switch(type) {
       case "exam": return <GraduationCap className="w-6 h-6" />;
       case "event": return <PartyPopper className="w-6 h-6" />;
       case "holiday": return <CalendarIcon className="w-6 h-6" />;
@@ -59,6 +59,18 @@ const AcademicCalendar = () => {
       default: return <Briefcase className="w-6 h-6" />;
     }
   };
+
+  if (loading) {
+    return (
+      <Layout>
+        <section className="py-16 md:py-24 bg-background min-h-[85vh]">
+          <div className="container mx-auto px-4">
+            <div className="text-center text-muted-foreground">Loading Calendar...</div>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -93,7 +105,7 @@ const AcademicCalendar = () => {
                   selected={selected}
                   onSelect={setSelected}
                   modifiers={{
-                    event: (date) => eventList.some(e => e.date === date.toLocaleDateString('en-CA')),
+                    event: (date) => eventList.some(e => e.event_date === date.toLocaleDateString('en-CA')),
                   }}
                   modifiersClassNames={{
                     event: "bg-primary/20 text-primary font-semibold rounded-full border-2 border-primary/40 shadow-lg hover:scale-110 transition-transform",
@@ -162,14 +174,17 @@ const AcademicCalendar = () => {
                         >
                           <div className="p-6 rounded-xl border-2 border-primary bg-card shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-5"> 
                             <div className="w-14 h-14 bg-primary text-primary-foreground rounded-lg flex items-center justify-center flex-shrink-0">
-                              {getEventIcon(event.icon)}
+                              {getEventIcon(event.event_type)}
                             </div>
                             <div className="flex-1">
                               <h3 className="text-lg md:text-xl font-bold mb-2 leading-tight text-foreground">
                                 {event.title}
                               </h3>
+                              {event.description && (
+                                <p className="text-sm text-muted-foreground mb-2">{event.description}</p>
+                              )}
                               <span className="inline-block px-3 py-1 bg-primary text-primary-foreground rounded-full text-xs font-semibold uppercase tracking-wider">
-                                {event.type}
+                                {event.event_type}
                               </span>
                             </div>
                           </div>

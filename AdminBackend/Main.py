@@ -11,7 +11,7 @@ import json
 from passlib.context import CryptContext
 from .Database import (
     get_db, Student, Teacher, Notice, GalleryImage, ExamResult,
-    TCRequest, Appointment, Admission, Admin, engine, Base
+    TCRequest, Appointment, Admission, Admin, CalendarEvent, FeeRule, ContactMessage, engine, Base
 )
 # Create Tables
 Base.metadata.create_all(bind=engine)
@@ -104,12 +104,16 @@ def update_student(id: int, update: StudentUpdate = Body(...), db: Session = Dep
     return {"message": "Student Updated"}
 
 class TeacherCreate(BaseModel):
-    teacher_id: str
+    teacher_id: str = None
     name: str
     subject: str
     qualification: str
     experience: str
-    contact: str
+    contact: str = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    joining_date: Optional[str] = None
+    photo: Optional[str] = None
 
 class NoticeCreate(BaseModel):
     title: str
@@ -247,15 +251,59 @@ def delete_student(id: int, db: Session = Depends(get_db)):
 @app.get("/api/teachers")
 def get_teachers(db: Session = Depends(get_db)):
     teachers = db.query(Teacher).all()
-    return [{"id": t.teacher_id, "name": t.name, "subject": t.subject, "qualification": t.qualification,
-             "experience": t.experience, "contact": t.contact} for t in teachers]
+    return [{
+        "id": t.id,
+        "teacher_id": t.teacher_id,
+        "name": t.name,
+        "subject": t.subject,
+        "qualification": t.qualification,
+        "experience": t.experience,
+        "contact": t.contact,
+        "email": t.email,
+        "photo": t.photo
+    } for t in teachers]
 
 @app.post("/api/teachers")
 def create_teacher(teacher: TeacherCreate, db: Session = Depends(get_db)):
-    db_teacher = Teacher(**teacher.dict())
+    data = teacher.dict(exclude_unset=True)
+    # Auto-Generate teacher_id If Not Provided Or Empty
+    if not data.get("teacher_id") or data.get("teacher_id") == "":
+        import uuid
+        data["teacher_id"] = str(uuid.uuid4())
+    
+    # Check If Teacher_id Already Exists
+    existing = db.query(Teacher).filter(Teacher.teacher_id == data["teacher_id"]).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Teacher ID Already Exists")
+    
+    db_teacher = Teacher(
+        teacher_id=data["teacher_id"],
+        name=data["name"],
+        subject=data["subject"],
+        qualification=data["qualification"],
+        experience=data["experience"],
+        contact=data.get("contact"),
+        email=data.get("email"),
+        photo=data.get("photo") or data.get("photo_url")
+    )
     db.add(db_teacher)
     db.commit()
-    return {"message": "Teacher Created"}
+    db.refresh(db_teacher)
+    return {"message": "Teacher Created", "teacher_id": db_teacher.teacher_id}
+
+@app.patch("/api/teachers/{teacher_id}")
+def update_teacher(teacher_id: str, teacher: TeacherCreate, db: Session = Depends(get_db)):
+    db_teacher = db.query(Teacher).filter(Teacher.teacher_id == teacher_id).first()
+    if not db_teacher:
+        raise HTTPException(status_code=404, detail="Teacher Not Found")
+    
+    data = teacher.dict(exclude_unset=True)
+    for key, value in data.items():
+        setattr(db_teacher, key, value)
+    
+    db.commit()
+    db.refresh(db_teacher)
+    return {"message": "Teacher Updated", "teacher_id": db_teacher.teacher_id}
 
 @app.delete("/api/teachers/{teacher_id}")
 def delete_teacher(teacher_id: str, db: Session = Depends(get_db)):
@@ -405,9 +453,39 @@ def create_result(result: ResultCreate, db: Session = Depends(get_db)):
 @app.get("/api/tc-requests")
 def get_tc_requests(db: Session = Depends(get_db)):
     requests = db.query(TCRequest).all()
-    return [{"id": r.id, "studentId": r.student_id, "name": r.name, "class": r.class_name,
-             "section": r.section, "reason": r.reason, "requestDate": r.request_date.isoformat(),
-             "status": r.status} for r in requests]
+    return [{
+        "id": r.id,
+        "student_id": r.student_id,
+        "student_name": r.name,
+        "class": r.class_name,
+        "section": r.section,
+        "reason": r.reason,
+        "request_date": r.request_date.isoformat() if r.request_date else None,
+        "status": r.status,
+        "tcDocument": r.tc_document
+    } for r in requests]
+
+@app.post("/api/tc-requests")
+def create_tc_request(
+    student_id: str = Body(...),
+    name: str = Body(...),
+    class_name: str = Body(..., alias="class"),
+    reason: str = Body(...),
+    request_date: date = Body(...),
+    db: Session = Depends(get_db)
+):
+    tc_request = TCRequest(
+        student_id=student_id,
+        name=name,
+        class_name=class_name,
+        section="",
+        reason=reason,
+        request_date=request_date
+    )
+    db.add(tc_request)
+    db.commit()
+    db.refresh(tc_request)
+    return {"message": "TC Request Created", "id": tc_request.id}
 
 @app.patch("/api/tc-requests/{request_id}")
 def update_tc_request(request_id: int, update: TCRequestUpdate, db: Session = Depends(get_db)):
@@ -520,11 +598,21 @@ def update_admission(admission_id: int, update: AdmissionUpdate, db: Session = D
 @app.get("/api/public/teachers")
 def get_public_teachers(db: Session = Depends(get_db)):
     teachers = db.query(Teacher).all()
-    return [{"name": t.name, "subject": t.subject, "photo": t.photo or ""} for t in teachers]
+    return [{
+        "id": t.teacher_id,
+        "teacher_id": t.teacher_id,
+        "name": t.name,
+        "subject": t.subject,
+        "qualification": t.qualification,
+        "experience": t.experience,
+        "contact": t.contact,
+        "email": t.email,
+        "photo": t.photo
+    } for t in teachers]
 
 @app.get("/api/public/notices")
 def get_public_notices(db: Session = Depends(get_db)):
-    notices = db.query(Notice).filter(Notice.status == "Active").order_by(Notice.date.desc()).limit(5).all()
+    notices = db.query(Notice).filter(Notice.status.in_(["Active", "Important"])).order_by(Notice.date.desc()).limit(5).all()
     return [
         {
             "id": n.id,
@@ -551,3 +639,226 @@ def get_public_gallery(db: Session = Depends(get_db)):
         }
         for i in images
     ]
+
+# ====================
+# CALENDAR EVENTS
+# ====================
+
+class CalendarEventCreate(BaseModel):
+    title: str
+    description: Optional[str] = None
+    event_date: date
+    event_type: str = "General"
+
+@app.get("/api/calendar-events")
+def get_calendar_events(db: Session = Depends(get_db)):
+    events = db.query(CalendarEvent).order_by(CalendarEvent.event_date.desc()).all()
+    return [{
+        "id": e.id,
+        "title": e.title,
+        "description": e.description,
+        "event_date": e.event_date.isoformat() if e.event_date else None,
+        "event_type": e.event_type
+    } for e in events]
+
+@app.post("/api/calendar-events")
+def create_calendar_event(event: CalendarEventCreate, db: Session = Depends(get_db)):
+    db_event = CalendarEvent(
+        title=event.title,
+        description=event.description,
+        event_date=event.event_date,
+        event_type=event.event_type
+    )
+    db.add(db_event)
+    db.commit()
+    db.refresh(db_event)
+    return {"message": "Event Created", "id": db_event.id}
+
+@app.delete("/api/calendar-events/{event_id}")
+def delete_calendar_event(event_id: int, db: Session = Depends(get_db)):
+    event = db.query(CalendarEvent).filter(CalendarEvent.id == event_id).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event Not Found")
+    db.delete(event)
+    db.commit()
+    return {"message": "Event Deleted"}
+
+@app.get("/api/public/calendar-events")
+def get_public_calendar_events(db: Session = Depends(get_db)):
+    events = db.query(CalendarEvent).order_by(CalendarEvent.event_date.desc()).limit(10).all()
+    return [{
+        "id": e.id,
+        "title": e.title,
+        "description": e.description,
+        "event_date": e.event_date.isoformat() if e.event_date else None,
+        "event_type": e.event_type
+    } for e in events]
+
+# ====================
+# FEE & RULES
+# ====================
+
+class FeeRuleCreate(BaseModel):
+    title: str
+    description: str
+    category: str = "Fee"
+    amount: Optional[str] = None
+
+@app.get("/api/fee-rules")
+def get_fee_rules(db: Session = Depends(get_db)):
+    items = db.query(FeeRule).all()
+    return [{
+        "id": f.id,
+        "title": f.title,
+        "description": f.description,
+        "category": f.category,
+        "amount": f.amount,
+        "attachment": f.attachment
+    } for f in items]
+
+@app.post("/api/fee-rules/upload")
+async def create_fee_rule_with_attachment(
+    title: str = Form(...),
+    description: str = Form(...),
+    category: str = Form("Fee"),
+    amount: Optional[str] = Form(None),
+    attachment: Optional[UploadFile] = File(None),
+    db: Session = Depends(get_db)
+):
+    attachment_url = None
+    if attachment:
+        file_content = await attachment.read()
+        file_path = os.path.join(UPLOAD_DIR, attachment.filename)
+        with open(file_path, "wb") as f:
+            f.write(file_content)
+        attachment_url = f"/Static/{attachment.filename}"
+    
+    db_item = FeeRule(
+        title=title,
+        description=description,
+        category=category,
+        amount=amount,
+        attachment=attachment_url
+    )
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return {"message": "Created Successfully", "id": db_item.id}
+
+@app.delete("/api/fee-rules/{item_id}")
+def delete_fee_rule(item_id: int, db: Session = Depends(get_db)):
+    item = db.query(FeeRule).filter(FeeRule.id == item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item Not Found")
+    db.delete(item)
+    db.commit()
+    return {"message": "Deleted Successfully"}
+
+@app.get("/api/public/fee-rules")
+def get_public_fee_rules(category: Optional[str] = None, db: Session = Depends(get_db)):
+    query = db.query(FeeRule)
+    if category:
+        query = query.filter(FeeRule.category == category)
+    items = query.all()
+    return [{
+        "id": f.id,
+        "title": f.title,
+        "description": f.description,
+        "category": f.category,
+        "amount": f.amount,
+        "attachment": f.attachment
+    } for f in items]
+
+# ====================
+# CONTACT MESSAGES
+# ====================
+
+class ContactMessageCreate(BaseModel):
+    name: str
+    email: str
+    phone: Optional[str] = None
+    subject: str
+    message: str
+
+@app.get("/api/contact-messages")
+def get_contact_messages(db: Session = Depends(get_db)):
+    messages = db.query(ContactMessage).order_by(ContactMessage.created_at.desc()).all()
+    return [{
+        "id": m.id,
+        "name": m.name,
+        "email": m.email,
+        "phone": m.phone,
+        "subject": m.subject,
+        "message": m.message,
+        "status": m.status,
+        "created_at": m.created_at.isoformat() if m.created_at else None
+    } for m in messages]
+
+@app.post("/api/contact-messages")
+def create_contact_message(message: ContactMessageCreate, db: Session = Depends(get_db)):
+    db_message = ContactMessage(
+        name=message.name,
+        email=message.email,
+        phone=message.phone,
+        subject=message.subject,
+        message=message.message
+    )
+    db.add(db_message)
+    db.commit()
+    db.refresh(db_message)
+    return {"message": "Message Sent Successfully", "id": db_message.id}
+
+@app.patch("/api/contact-messages/{message_id}")
+def update_contact_message_status(message_id: int, status: str = Body(..., embed=True), db: Session = Depends(get_db)):
+    message = db.query(ContactMessage).filter(ContactMessage.id == message_id).first()
+    if not message:
+        raise HTTPException(status_code=404, detail="Message Not Found")
+    message.status = status
+    db.commit()
+    return {"message": "Status Updated"}
+
+@app.delete("/api/contact-messages/{message_id}")
+def delete_contact_message(message_id: int, db: Session = Depends(get_db)):
+    message = db.query(ContactMessage).filter(ContactMessage.id == message_id).first()
+    if not message:
+        raise HTTPException(status_code=404, detail="Message Not Found")
+    db.delete(message)
+    db.commit()
+    return {"message": "Message Deleted"}
+
+# ====================
+# TC REQUESTS WITH ATTACHMENT
+# ====================
+
+@app.patch("/api/tc-requests/{request_id}/approve")
+async def approve_tc_request(
+    request_id: int,
+    tc_document: Optional[UploadFile] = File(None),
+    db: Session = Depends(get_db)
+):
+    tc_request = db.query(TCRequest).filter(TCRequest.id == request_id).first()
+    if not tc_request:
+        raise HTTPException(status_code=404, detail="TC Request Not Found")
+    
+    tc_request.status = "Approved"
+    
+    if tc_document:
+        file_content = await tc_document.read()
+        file_path = os.path.join(UPLOAD_DIR, tc_document.filename)
+        with open(file_path, "wb") as f:
+            f.write(file_content)
+        tc_request.tc_document = f"/Static/{tc_document.filename}"
+    
+    db.commit()
+    db.refresh(tc_request)
+    return {"message": "TC Request Approved", "tc_document": tc_request.tc_document}
+
+@app.get("/api/tc-requests/{request_id}/download")
+def get_tc_download(request_id: int, db: Session = Depends(get_db)):
+    tc_request = db.query(TCRequest).filter(TCRequest.id == request_id).first()
+    if not tc_request:
+        raise HTTPException(status_code=404, detail="TC Request Not Found")
+    if tc_request.status != "Approved" or not tc_request.tc_document:
+        raise HTTPException(status_code=403, detail="TC Not Available")
+    return {"tc_document": tc_request.tc_document}
+

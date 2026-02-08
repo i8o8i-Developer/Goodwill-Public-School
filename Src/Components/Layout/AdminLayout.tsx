@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
-import { Menu, X, LogOut, LayoutDashboard, Users, UserCircle, Bell, Image, Trophy, FileText, Calendar, UserCheck } from "lucide-react";
+import { Menu, X, LogOut, LayoutDashboard, Users, UserCircle, Bell, Image, Trophy, FileText, Calendar, UserCheck, DollarSign, Mail } from "lucide-react";
 import { Button } from "@/Components/ui/Button";
 import { toast } from "sonner";
 import schoolLogo from "@/Assets/School-Logo.png";
@@ -34,6 +34,9 @@ const AdminLayout = () => {
     { name: "TC Requests", path: "/admin/tc-requests", icon: FileText },
     { name: "Appointments", path: "/admin/appointments", icon: Calendar },
     { name: "Admissions", path: "/admin/admissions", icon: UserCheck },
+    { name: "Calendar Events", path: "/admin/calendar-events", icon: Calendar },
+    { name: "Fee Management", path: "/admin/fee-rules", icon: DollarSign },
+    { name: "Contact Messages", path: "/admin/contact-messages", icon: Mail },
   ];
 
   return (

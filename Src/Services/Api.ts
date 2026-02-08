@@ -74,21 +74,25 @@ export interface Teacher {
   subject: string;
   qualification: string;
   experience: string;
-  email: string;
-  phone: string;
-  joining_date: string;
-  photo_url?: string;
+  contact?: string;
+  email?: string;
+  photo?: string;
 }
 
 export const teachersAPI = {
   getAll: () => apiCall<Teacher[]>('/teachers'),
   getAllPublic: () => apiCall<Teacher[]>('/public/teachers'),
-  create: (teacher: Omit<Teacher, 'id'>) =>
+  create: (teacher: Omit<Teacher, 'id' | 'teacher_id'>) =>
     apiCall<Teacher>('/teachers', {
       method: 'POST',
       body: JSON.stringify(teacher),
     }),
-  delete: (id: number) =>
+  update: (id: string, teacher: Partial<Teacher>) =>
+    apiCall<{ message: string }>(`/teachers/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(teacher),
+    }),
+  delete: (id: string) =>
     apiCall<{ message: string }>(`/teachers/${id}`, {
       method: 'DELETE',
     }),
@@ -125,7 +129,7 @@ export const noticesAPI = {
       method: 'POST',
       body: formData,
     }).then(async res => {
-      if (!res.ok) throw new Error((await res.json()).detail || 'Failed to upload');
+      if (!res.ok) throw new Error((await res.json()).detail || 'Failed To Upload');
       return res.json();
     }),
   delete: (id: number) =>
@@ -201,13 +205,27 @@ export interface TCRequest {
   student_id: string;
   student_name: string;
   class: string;
+  section?: string;
   reason: string;
   request_date: string;
   status: string;
+  tcDocument?: string;
 }
 
 export const tcRequestsAPI = {
   getAll: () => apiCall<TCRequest[]>('/tc-requests'),
+  create: (request: { student_id: string, student_name: string, class: string, reason: string, request_date: string }) =>
+    apiCall<{ message: string; id: number }>('/tc-requests', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: request.student_id,
+        name: request.student_name,
+        class: request.class,
+        reason: request.reason,
+        request_date: request.request_date
+      }),
+    }),
   updateStatus: (id: number, status: string) =>
     apiCall<TCRequest>(`/tc-requests/${id}`, {
       method: 'PATCH',
@@ -266,4 +284,105 @@ export const admissionsAPI = {
       method: 'PATCH',
       body: JSON.stringify({ status, notes }),
     }),
+};
+
+// Calendar Events API
+export interface CalendarEvent {
+  id?: number;
+  title: string;
+  description?: string;
+  event_date: string;
+  event_type: string;
+}
+
+export const calendarEventsAPI = {
+  getAll: () => apiCall<CalendarEvent[]>('/calendar-events'),
+  getAllPublic: () => apiCall<CalendarEvent[]>('/public/calendar-events'),
+  create: (event: Omit<CalendarEvent, 'id'>) =>
+    apiCall<{ message: string; id: number }>('/calendar-events', {
+      method: 'POST',
+      body: JSON.stringify(event),
+    }),
+  delete: (id: number) =>
+    apiCall<{ message: string }>(`/calendar-events/${id}`, {
+      method: 'DELETE',
+    }),
+};
+
+// Fee & Rules API
+export interface FeeRule {
+  id?: number;
+  title: string;
+  description: string;
+  category: string;
+  amount?: string;
+  attachment?: string;
+}
+
+export const feeRulesAPI = {
+  getAll: () => apiCall<FeeRule[]>('/fee-rules'),
+  getAllPublic: (category?: string) => 
+    apiCall<FeeRule[]>(`/public/fee-rules${category ? `?category=${category}` : ''}`),
+  createWithAttachment: (formData: FormData) =>
+    fetch(`${API_BASE_URL}/fee-rules/upload`, {
+      method: 'POST',
+      body: formData,
+    }).then(async res => {
+      if (!res.ok) throw new Error((await res.json()).detail || 'Failed to upload');
+      return res.json();
+    }),
+  delete: (id: number) =>
+    apiCall<{ message: string }>(`/fee-rules/${id}`, {
+      method: 'DELETE',
+    }),
+};
+
+// Contact Messages API
+export interface ContactMessage {
+  id?: number;
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  status?: string;
+  created_at?: string;
+}
+
+export const contactMessagesAPI = {
+  getAll: () => apiCall<ContactMessage[]>('/contact-messages'),
+  create: (message: Omit<ContactMessage, 'id' | 'status' | 'created_at'>) =>
+    apiCall<{ message: string; id: number }>('/contact-messages', {
+      method: 'POST',
+      body: JSON.stringify(message),
+    }),
+  updateStatus: (id: number, status: string) =>
+    apiCall<{ message: string }>(`/contact-messages/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
+    }),
+  delete: (id: number) =>
+    apiCall<{ message: string }>(`/contact-messages/${id}`, {
+      method: 'DELETE',
+    }),
+};
+
+// TC Requests API (Enhanced)
+export const tcRequestsAPIEnhanced = {
+  ...tcRequestsAPI,
+  approveTCRequest: (id: number, tcDocument?: File) => {
+    const formData = new FormData();
+    if (tcDocument) {
+      formData.append('tc_document', tcDocument);
+    }
+    return fetch(`${API_BASE_URL}/tc-requests/${id}/approve`, {
+      method: 'PATCH',
+      body: formData,
+    }).then(async res => {
+      if (!res.ok) throw new Error((await res.json()).detail || 'Failed To Approve');
+      return res.json();
+    });
+  },
+  getTCDownload: (id: number) =>
+    apiCall<{ tc_document: string }>(`/tc-requests/${id}/download`),
 };

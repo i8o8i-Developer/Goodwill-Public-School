@@ -35,13 +35,19 @@ const Teachers = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {teachers.map((teacher, idx) => (
               <div key={idx} className="bg-card rounded-xl shadow-lg p-6 flex flex-col items-center">
-                <div className="w-32 h-32 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-3xl mb-4 border-2 border-primary">
-                  {teacher.name.split(" ").map((n) => n[0]).join("")}
-                </div>
+                {teacher.photo ? (
+                  <img src={teacher.photo} alt={teacher.name} className="w-32 h-32 object-cover rounded-full border-2 border-primary mb-4" />
+                ) : (
+                  <div className="w-32 h-32 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-3xl mb-4 border-2 border-primary">
+                    {teacher.name.split(" ").map((n) => n[0]).join("")}
+                  </div>
+                )}
                 <h2 className="text-xl font-bold text-primary mb-2">{teacher.name}</h2>
-                <p className="text-sm text-muted-foreground mb-2">{teacher.subject}</p>
-                <p className="text-sm text-foreground text-center">{teacher.qualification}</p>
-                <p className="text-xs text-muted-foreground mt-2">{teacher.experience} Experience</p>
+                <p className="text-sm text-primary font-medium mb-1">{teacher.subject}</p>
+                <p className="text-sm text-muted-foreground mb-1">Qualification: {teacher.qualification}</p>
+                <p className="text-sm text-muted-foreground mb-1">Experience: {teacher.experience}</p>
+                {teacher.contact && <p className="text-xs text-muted-foreground mt-1">Contact: {teacher.contact}</p>}
+                {teacher.email && <p className="text-xs text-muted-foreground mt-1">Email: {teacher.email}</p>}
               </div>
             ))}
           </div>

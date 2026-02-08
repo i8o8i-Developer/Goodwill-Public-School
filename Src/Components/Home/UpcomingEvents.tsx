@@ -1,35 +1,37 @@
+import { useState, useEffect } from "react";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/Components/ui/Button";
 
-const events = [
-  {
-    id: 1,
-    title: "Annual Sports Day",
-    date: "2026-02-15",
-    time: "9:00 AM - 4:00 PM",
-    venue: "School Ground",
-    description: "Annual Sports Competition With Various Track And Field Events.",  
-  },
-  {
-    id: 2,
-    title: "Science Exhibition",
-    date: "2026-02-22",
-    time: "10:00 AM - 2:00 PM",
-    venue: "School Auditorium",
-    description: "Students Showcase Their Innovative Science Projects.",
-  },
-  {
-    id: 3,
-    title: "Parent-Teacher Meeting",
-    date: "2026-03-05",
-    time: "9:00 AM - 1:00 PM",
-    venue: "Respective Classrooms",
-    description: "Discussion On Student Progress And Academic Performance.",
-  },
-];
+interface CalendarEvent {
+  id: number;
+  title: string;
+  description?: string;
+  event_date: string;
+  event_type: string;
+}
 
 const UpcomingEvents = () => {
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/public/calendar-events');
+      if (response.ok) {
+        const data = await response.json();
+        setEvents(data);
+      }
+    } catch (error) {
+      console.error('Failed To Fetch Events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return {
@@ -38,6 +40,20 @@ const UpcomingEvents = () => {
       year: date.toLocaleDateString('en-IN', { year: 'numeric' }),
     };
   };
+
+  if (loading) {
+    return (
+      <section className="py-16 md:py-20 bg-muted">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-muted-foreground">Loading Events...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (events.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-16 md:py-20 bg-muted">
@@ -52,15 +68,15 @@ const UpcomingEvents = () => {
             </h2>
           </div>
           <Button asChild variant="outline" className="mt-4 md:mt-0">
-            <Link to="/calendar" className="flex items-center gap-2">
+            <Link to="/academic-calendar" className="flex items-center gap-2">
               View Calendar <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {events.map((event) => {
-            const dateInfo = formatDate(event.date);
+          {events.slice(0, 3).map((event) => {
+            const dateInfo = formatDate(event.event_date);
             return (
               <div
                 key={event.id}
@@ -77,21 +93,19 @@ const UpcomingEvents = () => {
                     </h3>
                     <div className="space-y-1 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4" />
-                        <span>{event.time}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        <span>{event.venue}</span>
+                        <Calendar className="h-4 w-4" />
+                        <span className="uppercase font-medium">{event.event_type}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="px-4 pb-4">
-                  <p className="text-sm text-muted-foreground">
-                    {event.description}
-                  </p>
-                </div>
+                {event.description && (
+                  <div className="px-4 pb-4">
+                    <p className="text-sm text-muted-foreground">
+                      {event.description}
+                    </p>
+                  </div>
+                )}
               </div>
             );
           })}

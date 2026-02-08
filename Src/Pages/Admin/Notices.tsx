@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/Components/ui/Button";
 import { Card } from "@/Components/ui/Card";
-import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import { Badge } from "@/Components/ui/Badge";
+import { Plus, Edit, Trash2, Eye, Download, Calendar, AlertTriangle } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/Components/ui/Dialog";
 import { Input } from "@/Components/ui/Input";
 import { Label } from "@/Components/ui/Label";
@@ -24,6 +25,7 @@ const Notices = () => {
   });
   const [selectedNotice, setSelectedNotice] = useState<Notice | null>(null);
   const [editMode, setEditMode] = useState(false);
+  const [newAttachment, setNewAttachment] = useState<File | null>(null);
 
   useEffect(() => {
     fetchNotices();
@@ -228,82 +230,163 @@ const Notices = () => {
       </div>
 
       {/* View/Edit Modal */}
-      <Dialog open={isViewEditDialogOpen && selectedNotice !== null} onOpenChange={(open) => { setIsViewEditDialogOpen(open); if (!open) { setSelectedNotice(null); setEditMode(false); } }}>
-        <DialogContent className="max-w-xl">
+      <Dialog open={isViewEditDialogOpen && selectedNotice !== null} onOpenChange={(open) => { setIsViewEditDialogOpen(open); if (!open) { setSelectedNotice(null); setEditMode(false); setNewAttachment(null); } }}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editMode ? "Edit Notice" : "Notice Details"}</DialogTitle>
+            <DialogDescription className="sr-only">
+              {editMode ? "Edit The Notice Details And Save Changes" : "View The Complete Details Of This Notice"}
+            </DialogDescription>
           </DialogHeader>
           {selectedNotice && !editMode && (
-            <div className="space-y-2">
-              <div className="font-bold text-lg">{selectedNotice.title}</div>
-              <div className="text-sm text-muted-foreground">{new Date(selectedNotice.date).toLocaleDateString()}</div>
-              <div className="text-xs font-medium">Category: {selectedNotice.category}</div>
-              <div className="text-xs font-medium">Status: {selectedNotice.status}</div>
-              <div className="mt-2">{selectedNotice.content}</div>
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-2xl font-bold text-card-foreground mb-2">{selectedNotice.title}</h2>
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <Badge variant={selectedNotice.status?.toLowerCase() === "important" ? "destructive" : "outline"} className="gap-1">
+                    {selectedNotice.status?.toLowerCase() === "important" && <AlertTriangle className="h-3 w-3" />}
+                    {selectedNotice.status}
+                  </Badge>
+                  <Badge variant="secondary">{selectedNotice.category}</Badge>
+                  <span className="text-sm text-muted-foreground flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    {new Date(selectedNotice.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </span>
+                </div>
+              </div>
+              <div className="bg-muted/50 p-4 rounded-md">
+                <p className="text-card-foreground leading-relaxed">{selectedNotice.content}</p>
+              </div>
               {selectedNotice.attachment && (
-                <a href={`http://localhost:8000/static/${selectedNotice.attachment}`} target="_blank" rel="noopener noreferrer" className="text-primary underline block mt-2" download>
-                  Download Attachment
-                </a>
+                <div className="border-t pt-4">
+                  <a 
+                    href={`http://localhost:8000/Static/${selectedNotice.attachment}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    download
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition-colors"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download Attachment
+                  </a>
+                </div>
               )}
-              <div className="flex justify-end mt-4">
-                <Button onClick={() => { setEditMode(true); }}>Edit</Button>
+              <div className="flex justify-end pt-4 border-t">
+                <Button onClick={() => { setEditMode(true); setNewAttachment(null); }} className="gap-2">
+                  <Edit className="h-4 w-4" />
+                  Edit Notice
+                </Button>
               </div>
             </div>
           )}
           {selectedNotice && editMode && (
-            <div className="space-y-3">
-              <Input
-                value={selectedNotice.title}
-                onChange={e => setSelectedNotice({ ...selectedNotice, title: e.target.value })}
-                placeholder="Title"
-              />
-              <Textarea
-                value={selectedNotice.content}
-                onChange={e => setSelectedNotice({ ...selectedNotice, content: e.target.value })}
-                placeholder="Content"
-              />
-              <select
-                value={selectedNotice.category}
-                onChange={e => setSelectedNotice({ ...selectedNotice, category: e.target.value })}
-                className="w-full border rounded px-2 py-2"
-              >
-                <option value="Examination">Examination</option>
-                <option value="Event">Event</option>
-                <option value="Meeting">Meeting</option>
-                <option value="Admission">Admission</option>
-                <option value="General">General</option>
-              </select>
-              <select
-                value={selectedNotice.status}
-                onChange={e => setSelectedNotice({ ...selectedNotice, status: e.target.value })}
-                className="w-full border rounded px-2 py-2"
-              >
-                <option value="Active">Active</option>
-                <option value="Important">Important</option>
-              </select>
-              <Input
-                type="date"
-                value={selectedNotice.date}
-                onChange={e => setSelectedNotice({ ...selectedNotice, date: e.target.value })}
-              />
-              {/* Attachment Editing Not Supported Here For Simplicity */}
-              <div className="flex justify-end mt-4 gap-2">
-                <Button variant="outline" onClick={() => setEditMode(false)}>Cancel</Button>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="edit-title" className="text-sm font-medium mb-1.5 block">Notice Title</Label>
+                <Input
+                  id="edit-title"
+                  value={selectedNotice.title}
+                  onChange={e => setSelectedNotice({ ...selectedNotice, title: e.target.value })}
+                  placeholder="Enter Notice Title"
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-content" className="text-sm font-medium mb-1.5 block">Content</Label>
+                <Textarea
+                  id="edit-content"
+                  value={selectedNotice.content}
+                  onChange={e => setSelectedNotice({ ...selectedNotice, content: e.target.value })}
+                  placeholder="Enter Notice Content"
+                  rows={5}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label htmlFor="edit-category" className="text-sm font-medium mb-1.5 block">Category</Label>
+                  <select
+                    id="edit-category"
+                    value={selectedNotice.category}
+                    onChange={e => setSelectedNotice({ ...selectedNotice, category: e.target.value })}
+                    className="w-full border rounded px-3 py-2 text-sm"
+                  >
+                    <option value="Examination">Examination</option>
+                    <option value="Event">Event</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="Admission">Admission</option>
+                    <option value="General">General</option>
+                  </select>
+                </div>
+                <div>
+                  <Label htmlFor="edit-status" className="text-sm font-medium mb-1.5 block">Status</Label>
+                  <select
+                    id="edit-status"
+                    value={selectedNotice.status}
+                    onChange={e => setSelectedNotice({ ...selectedNotice, status: e.target.value })}
+                    className="w-full border rounded px-3 py-2 text-sm"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Important">Important</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="edit-date" className="text-sm font-medium mb-1.5 block">Date</Label>
+                <Input
+                  id="edit-date"
+                  type="date"
+                  value={selectedNotice.date}
+                  onChange={e => setSelectedNotice({ ...selectedNotice, date: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-attachment" className="text-sm font-medium mb-1.5 block">Update Attachment (Optional)</Label>
+                {selectedNotice.attachment && (
+                  <div className="mb-2 text-sm text-muted-foreground">
+                    Current: {selectedNotice.attachment}
+                  </div>
+                )}
+                <Input
+                  id="edit-attachment"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx,.txt"
+                  onChange={e => setNewAttachment(e.target.files?.[0] || null)}
+                />
+                {newAttachment && (
+                  <p className="text-xs text-green-600 mt-1">New File Selected: {newAttachment.name}</p>
+                )}
+              </div>
+              <div className="flex justify-end pt-4 border-t gap-2">
+                <Button variant="outline" onClick={() => { setEditMode(false); setNewAttachment(null); }}>Cancel</Button>
                 <Button onClick={async () => {
-                  // Save changes
                   try {
                     if (selectedNotice && selectedNotice.id) {
-                      await noticesAPI.update(selectedNotice.id, selectedNotice);
+                      // If There's A New Attachment, Use The Upload Endpoint
+                      if (newAttachment) {
+                        const formData = new FormData();
+                        formData.append("id", selectedNotice.id.toString());
+                        formData.append("title", selectedNotice.title);
+                        formData.append("content", selectedNotice.content);
+                        formData.append("category", selectedNotice.category);
+                        formData.append("status", selectedNotice.status);
+                        formData.append("date", selectedNotice.date);
+                        formData.append("attachment", newAttachment);
+                        // For Now, Use Update Without Attachment And Show Message
+                        await noticesAPI.update(selectedNotice.id, selectedNotice);
+                        toast.info("Notice Updated. Note: Attachment Update Requires Backend Enhancement.");
+                      } else {
+                        await noticesAPI.update(selectedNotice.id, selectedNotice);
+                        toast.success("Notice Updated Successfully");
+                      }
                       await fetchNotices();
                       setIsViewEditDialogOpen(false);
                       setSelectedNotice(null);
                       setEditMode(false);
-                      toast.success("Notice Updated Successfully");
+                      setNewAttachment(null);
                     }
                   } catch (error) {
                     toast.error("Failed To Update Notice");
                   }
-                }}>Save</Button>
+                }}>Save Changes</Button>
               </div>
             </div>
           )}

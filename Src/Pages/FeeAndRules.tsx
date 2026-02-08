@@ -1,9 +1,37 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Layout from "../Components/Layout/Layout";
 import { FeeChart, FeeRules } from "../Components/Rules/FeeAndDiscipline";
 import heroSchool from "@/Assets/Hero-School.png";
+import { Download } from "lucide-react";
 
-const FeeAndRulesPage = () => (
+interface FeeDocument {
+  id: number;
+  title: string;
+  attachment?: string;
+}
+
+const FeeAndRulesPage = () => {
+  const [feeDocuments, setFeeDocuments] = useState<FeeDocument[]>([]);
+
+  useEffect(() => {
+    fetchFeeDocuments();
+  }, []);
+
+  const fetchFeeDocuments = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/public/fee-rules?category=FeeChartDownload');
+      if (response.ok) {
+        const data: FeeDocument[] = await response.json();
+        // Filter Items With Attachments
+        const docs = data.filter((item) => item.attachment);
+        setFeeDocuments(docs);
+      }
+    } catch (error) {
+      console.error('Failed To Fetch Fee Documents:', error);
+    }
+  };
+
+  return (
   <Layout>
     {/* Hero Banner */}
     <section className="relative h-64 md:h-80">
@@ -17,25 +45,32 @@ const FeeAndRulesPage = () => (
       </div>
     </section>
 
-    {/* Content */}
-    <section className="py-16 md:py-20 bg-background">
-      <div className="container mx-auto px-4">
-        {/* Fee Chart Download Link */}
-        <div className="flex justify-end mb-6">
-          <a
-            href="/Assets/Fee-Chart.pdf"
-            download
-            className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground rounded-lg font-semibold shadow hover:bg-primary/90 transition-colors border border-primary"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" /></svg>
-            Download Fee Chart (PDF)
-          </a>
+      {/* Content */}
+      <section className="py-16 md:py-20 bg-background">
+        <div className="container mx-auto px-4">
+          {/* Fee Chart Download Links */}
+          {feeDocuments.length > 0 && (
+            <div className="flex flex-wrap justify-end gap-4 mb-6">
+              {feeDocuments.map((doc) => (
+                <a
+                  key={doc.id}
+                  href={`http://localhost:8000${doc.attachment}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground rounded-lg font-semibold shadow hover:bg-primary/90 transition-colors border border-primary"
+                >
+                  <Download className="h-5 w-5" />
+                  Download {doc.title}
+                </a>
+              ))}
+            </div>
+          )}
+          <FeeChart />
+          <FeeRules />
         </div>
-        <FeeChart />
-        <FeeRules />
-      </div>
-    </section>
-  </Layout>
-);
+      </section>
+    </Layout>
+  );
+};
 
 export default FeeAndRulesPage;

@@ -14,6 +14,8 @@ const Teachers = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingTeacherId, setEditingTeacherId] = useState<string | null>(null);
   const { uploadImage, isCloudinaryLoaded } = useCloudinary();
   const [formData, setFormData] = useState({
     teacher_id: "",
@@ -21,10 +23,9 @@ const Teachers = () => {
     subject: "",
     qualification: "",
     experience: "",
+    contact: "",
     email: "",
-    phone: "",
-    joining_date: "",
-    photo_url: ""
+    photo: ""
   });
 
   useEffect(() => {
@@ -49,36 +50,63 @@ const Teachers = () => {
   const handleAddTeacher = async () => {
     console.log('handleAddTeacher called with formData:', formData);
     
-    if (!formData.teacher_id || !formData.name || !formData.subject || !formData.qualification || !formData.experience) {
+    if (!formData.name || !formData.subject || !formData.qualification || !formData.experience) {
       toast.error("Please Fill All Required Fields");
       console.error('Validation Failed:', formData);
       return;
     }
 
     try {
-      console.log('Sending Teacher Data To API:', formData);
-      await teachersAPI.create(formData);
-      await fetchTeachers();
+      if (isEditMode && editingTeacherId) {
+        // Don't Send teacher_id In Update - It's In The URL Path
+        const { teacher_id, ...updateData } = formData;
+        await teachersAPI.update(editingTeacherId, updateData);
+        toast.success("Teacher Updated Successfully!");
+      } else {
+        // Don't Send teacher_id For New Teachers - Let Backend Generate It
+        const { teacher_id, ...submitData } = formData;
+        console.log('Sending Teacher Data To API:', submitData);
+        await teachersAPI.create(submitData);
+        toast.success("Teacher Added Successfully");
+      }
+      
       setIsDialogOpen(false);
+      setIsEditMode(false);
+      setEditingTeacherId(null);
       setFormData({
         teacher_id: "",
         name: "",
         subject: "",
         qualification: "",
         experience: "",
+        contact: "",
         email: "",
-        phone: "",
-        joining_date: "",
-        photo_url: ""
+        photo: ""
       });
-      toast.success("Teacher Added Successfully");
+      await fetchTeachers();
     } catch (error) {
-      console.error('Failed To Add Teacher:', error);
-      toast.error("Failed To Add Teacher");
+      console.error('Failed To Add/Update Teacher:', error);
+      toast.error("Failed To Add/Update Teacher");
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleEdit = (teacher: Teacher) => {
+    setIsEditMode(true);
+    setEditingTeacherId(teacher.teacher_id);
+    setFormData({
+      teacher_id: teacher.teacher_id,
+      name: teacher.name,
+      subject: teacher.subject,
+      qualification: teacher.qualification,
+      experience: teacher.experience,
+      contact: teacher.contact || "",
+      email: teacher.email || "",
+      photo: teacher.photo || ""
+    });
+    setIsDialogOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
     if (!confirm("Are You Sure You Want To Delete This Teacher?")) return;
     try {
       await teachersAPI.delete(id);
@@ -101,7 +129,23 @@ const Teachers = () => {
           <h1 className="text-3xl font-bold text-foreground mb-2">Teachers Management</h1>
           <p className="text-muted-foreground">Manage Teacher Records</p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog open={isDialogOpen} onOpenChange={(open) => {
+          setIsDialogOpen(open);
+          if (!open) {
+            setIsEditMode(false);
+            setEditingTeacherId(null);
+            setFormData({
+              teacher_id: "",
+              name: "",
+              subject: "",
+              qualification: "",
+              experience: "",
+              contact: "",
+              email: "",
+              photo: ""
+            });
+          }
+        }}>
           <DialogTrigger asChild>
             <Button className="gap-2">
               <Plus className="h-4 w-4" />
@@ -110,7 +154,7 @@ const Teachers = () => {
           </DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[85vh] flex flex-col bg-gradient-to-br from-background to-secondary/20">
             <DialogHeader className="border-b pb-3 shrink-0">
-              <DialogTitle className="text-2xl font-bold text-primary">Add New Teacher</DialogTitle>
+              <DialogTitle className="text-2xl font-bold text-primary">{isEditMode ? "Edit Teacher" : "Add New Teacher"}</DialogTitle>
               <DialogDescription className="text-sm text-muted-foreground mt-1">Fill In The Teacher Details Below</DialogDescription>
             </DialogHeader>
             <div className="overflow-y-auto flex-1 py-4 px-1">
@@ -118,16 +162,17 @@ const Teachers = () => {
               <div className="bg-card p-4 rounded-lg border border-border">
                 <h3 className="font-semibold text-sm text-primary mb-3">Basic Information</h3>
                 <div className="space-y-3">
-                  <div>
-                    <Label htmlFor="teacher_id" className="text-xs font-medium">Teacher ID *</Label>
-                    <Input
-                      id="teacher_id"
-                      placeholder="e.g., T001"
-                      value={formData.teacher_id}
-                      onChange={(e) => setFormData({ ...formData, teacher_id: e.target.value })}
-                      className="mt-1.5"
-                    />
-                  </div>
+                  {isEditMode && (
+                    <div>
+                      <Label htmlFor="teacher_id" className="text-xs font-medium">Teacher ID</Label>
+                      <Input
+                        id="teacher_id"
+                        value={formData.teacher_id}
+                        disabled
+                        className="mt-1.5 bg-muted"
+                      />
+                    </div>
+                  )}
                   <div>
                     <Label htmlFor="name" className="text-xs font-medium">Teacher Name *</Label>
                     <Input
@@ -176,16 +221,7 @@ const Teachers = () => {
                         className="mt-1.5"
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="joining_date" className="text-xs font-medium">Joining Date</Label>
-                      <Input
-                        id="joining_date"
-                        type="date"
-                        value={formData.joining_date}
-                        onChange={(e) => setFormData({ ...formData, joining_date: e.target.value })}
-                        className="mt-1.5"
-                      />
-                    </div>
+                    {/* Joining Date Removed For Model Alignment */}
                   </div>
                 </div>
               </div>
@@ -205,12 +241,12 @@ const Teachers = () => {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="phone" className="text-xs font-medium">Phone</Label>
+                      <Label htmlFor="contact" className="text-xs font-medium">Contact</Label>
                       <Input
-                        id="phone"
+                        id="contact"
                         placeholder="+91 9876543210"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        value={formData.contact}
+                        onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                         className="mt-1.5"
                       />
                     </div>
@@ -220,9 +256,9 @@ const Teachers = () => {
               <div className="bg-card p-4 rounded-lg border border-border">
                 <h3 className="font-semibold text-sm text-primary mb-3">Profile Photo</h3>
                 <div className="space-y-3">
-                  {formData.photo_url && (
+                  {formData.photo && (
                     <div className="flex items-center justify-center p-4 bg-secondary/50 rounded-lg">
-                      <img src={formData.photo_url} alt="Preview" className="h-32 w-32 object-cover rounded-full border-4 border-primary" />
+                      <img src={formData.photo} alt="Preview" className="h-32 w-32 object-cover rounded-full border-4 border-primary" />
                     </div>
                   )}
                   <Button
@@ -231,13 +267,13 @@ const Teachers = () => {
                     className="w-full h-11 border-dashed border-2 hover:border-primary hover:bg-primary/5"
                     onClick={() => uploadImage((url) => {
                       console.log('Teacher Photo Uploaded:', url);
-                      setFormData(prev => ({ ...prev, photo_url: url }));
+                      setFormData(prev => ({ ...prev, photo: url }));
                       toast.success('Photo Uploaded Successfully!');
                     })}
                     disabled={!isCloudinaryLoaded}
                   >
                     <Upload className="h-4 w-4 mr-2" />
-                    {!isCloudinaryLoaded ? 'Loading Cloudinary...' : (formData.photo_url ? 'Change Photo' : 'Upload Photo From Cloudinary')}
+                    {!isCloudinaryLoaded ? 'Loading Cloudinary...' : (formData.photo ? 'Change Photo' : 'Upload Photo From Cloudinary')}
                   </Button>
                 </div>
               </div>
@@ -245,7 +281,7 @@ const Teachers = () => {
             </div>
             <div className="border-t pt-4 shrink-0">
               <Button onClick={handleAddTeacher} className="w-full h-11 text-base font-semibold">
-                Add Teacher
+                {isEditMode ? "Update Teacher" : "Add Teacher"}
               </Button>
             </div>
           </DialogContent>
@@ -270,14 +306,18 @@ const Teachers = () => {
             {filteredTeachers.map((teacher) => (
               <Card key={teacher.id} className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex justify-between items-start mb-4">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-xl">
-                    {teacher.name.split(" ").map((n) => n[0]).join("")}
-                  </div>
+                  {teacher.photo ? (
+                    <img src={teacher.photo} alt={teacher.name} className="w-16 h-16 object-cover rounded-full border-2 border-primary" />
+                  ) : (
+                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-xl">
+                      {teacher.name.split(" ").map((n) => n[0]).join("")}
+                    </div>
+                  )}
                   <div className="flex gap-2">
-                    <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                    <Button size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => handleEdit(teacher)}>
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-red-600" onClick={() => teacher.id && handleDelete(teacher.id)}>
+                    <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-red-600" onClick={() => teacher.teacher_id && handleDelete(teacher.teacher_id)}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -287,7 +327,8 @@ const Teachers = () => {
                 <div className="space-y-1 text-sm text-muted-foreground">
                   <p><strong>Qualification:</strong> {teacher.qualification}</p>
                   <p><strong>Experience:</strong> {teacher.experience}</p>
-                  <p><strong>Contact:</strong> {teacher.phone}</p>
+                  <p><strong>Contact:</strong> {teacher.contact}</p>
+                  <p><strong>Email:</strong> {teacher.email}</p>
                 </div>
               </Card>
             ))}

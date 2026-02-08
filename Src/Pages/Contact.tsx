@@ -7,6 +7,7 @@ import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
 import heroSchool from "@/Assets/Hero-School.png";
 import { useState } from "react";
 import { toast } from "sonner";
+import { contactMessagesAPI } from "@/Services/Api";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -16,17 +17,32 @@ const Contact = () => {
     subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message Sent Successfully! We Will Get Back To You Soon.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    });
+    
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast.error("Please Fill All Required Fields");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      await contactMessagesAPI.create(formData);
+      toast.success("Message Sent Successfully! We Will Get Back To You Soon.");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      toast.error("Failed To Send Message. Please Try Again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -194,9 +210,9 @@ const Contact = () => {
                     rows={5}
                   />
                 </div>
-                <Button type="submit" className="w-full" size="lg">
+                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                   <Send className="h-4 w-4 mr-2" />
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>
