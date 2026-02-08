@@ -2,13 +2,16 @@ import Layout from "@/Components/Layout/Layout";
 import { Calendar } from "@/Components/ui/Calendar";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar as CalendarIcon, GraduationCap, PartyPopper, Users, Briefcase } from "lucide-react";
+import { Calendar as CalendarIcon, GraduationCap, PartyPopper, Users, Briefcase, Clock, MapPin } from "lucide-react";
 
 interface CalendarEvent {
   id: number;
   title: string;
   description?: string;
   event_date: string;
+  start_time?: string;
+  end_time?: string;
+  location?: string;
   event_type: string;
 }
 
@@ -180,6 +183,22 @@ const AcademicCalendar = () => {
                               <h3 className="text-lg md:text-xl font-bold mb-2 leading-tight text-foreground">
                                 {event.title}
                               </h3>
+                              {(event.start_time || event.end_time || event.location) && (
+                                <div className="space-y-1 mb-2">
+                                  {event.start_time && event.end_time && (
+                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                      <Clock className="h-4 w-4" />
+                                      <span>{event.start_time} - {event.end_time}</span>
+                                    </div>
+                                  )}
+                                  {event.location && (
+                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                      <MapPin className="h-4 w-4" />
+                                      <span>{event.location}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
                               {event.description && (
                                 <p className="text-sm text-muted-foreground mb-2">{event.description}</p>
                               )}

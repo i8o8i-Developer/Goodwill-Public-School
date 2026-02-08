@@ -655,6 +655,9 @@ class CalendarEventCreate(BaseModel):
     title: str
     description: Optional[str] = None
     event_date: date
+    start_time: Optional[str] = None
+    end_time: Optional[str] = None
+    location: Optional[str] = None
     event_type: str = "General"
 
 @app.get("/api/calendar-events")
@@ -665,6 +668,9 @@ def get_calendar_events(db: Session = Depends(get_db)):
         "title": e.title,
         "description": e.description,
         "event_date": e.event_date.isoformat() if e.event_date else None,
+        "start_time": e.start_time,
+        "end_time": e.end_time,
+        "location": e.location,
         "event_type": e.event_type
     } for e in events]
 
@@ -674,6 +680,9 @@ def create_calendar_event(event: CalendarEventCreate, db: Session = Depends(get_
         title=event.title,
         description=event.description,
         event_date=event.event_date,
+        start_time=event.start_time,
+        end_time=event.end_time,
+        location=event.location,
         event_type=event.event_type
     )
     db.add(db_event)
@@ -698,6 +707,9 @@ def get_public_calendar_events(db: Session = Depends(get_db)):
         "title": e.title,
         "description": e.description,
         "event_date": e.event_date.isoformat() if e.event_date else None,
+        "start_time": e.start_time,
+        "end_time": e.end_time,
+        "location": e.location,
         "event_type": e.event_type
     } for e in events]
 

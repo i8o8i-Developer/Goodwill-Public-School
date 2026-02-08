@@ -95,6 +95,9 @@ class CalendarEvent(Base):
     event_date = Column(Date)
     event_type = Column(String, default="General")  # General, Holiday, Exam, etc.
     created_at = Column(DateTime, default=datetime.utcnow)
+    start_time = Column(String, nullable=True)
+    end_time = Column(String, nullable=True)
+    location = Column(String, nullable=True)
 
 class FeeRule(Base):
     __tablename__ = "fee_rules"

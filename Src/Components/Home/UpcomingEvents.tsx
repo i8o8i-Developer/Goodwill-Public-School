@@ -8,6 +8,9 @@ interface CalendarEvent {
   title: string;
   description?: string;
   event_date: string;
+  start_time?: string;
+  end_time?: string;
+  location?: string;
   event_type: string;
 }
 
@@ -92,10 +95,18 @@ const UpcomingEvents = () => {
                       {event.title}
                     </h3>
                     <div className="space-y-1 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        <span className="uppercase font-medium">{event.event_type}</span>
-                      </div>
+                      {event.start_time && event.end_time && (
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-4 w-4" />
+                          <span>{event.start_time} - {event.end_time}</span>
+                        </div>
+                      )}
+                      {event.location && (
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          <span>{event.location}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

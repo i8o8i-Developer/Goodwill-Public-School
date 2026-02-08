@@ -19,6 +19,9 @@ const CalendarEvents = () => {
     title: "",
     description: "",
     event_date: "",
+    start_time: "",
+    end_time: "",
+    location: "",
     event_type: "General"
   });
 
@@ -51,6 +54,9 @@ const CalendarEvents = () => {
         title: "",
         description: "",
         event_date: "",
+        start_time: "",
+        end_time: "",
+        location: "",
         event_type: "General"
       });
       fetchEvents();
@@ -93,7 +99,7 @@ const CalendarEvents = () => {
               <DialogTitle className="text-2xl font-bold text-primary">Add New Event</DialogTitle>
               <DialogDescription>Fill In The Event Details</DialogDescription>
             </DialogHeader>
-            <div className="space-y-4">
+            <div className="space-y-4 max-h-[70vh] overflow-y-auto">
               <div>
                 <Label htmlFor="title">Event Title *</Label>
                 <Input
@@ -111,6 +117,40 @@ const CalendarEvents = () => {
                   type="date"
                   value={formData.event_date}
                   onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
+                  className="mt-1.5"
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="start_time">Start Time</Label>
+                  <Input
+                    id="start_time"
+                    type="time"
+                    placeholder="9:00 AM"
+                    value={formData.start_time}
+                    onChange={(e) => setFormData({ ...formData, start_time: e.target.value })}
+                    className="mt-1.5"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="end_time">End Time</Label>
+                  <Input
+                    id="end_time"
+                    type="time"
+                    placeholder="4:00 PM"
+                    value={formData.end_time}
+                    onChange={(e) => setFormData({ ...formData, end_time: e.target.value })}
+                    className="mt-1.5"
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="location">Location</Label>
+                <Input
+                  id="location"
+                  placeholder="e.g., School Ground"
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   className="mt-1.5"
                 />
               </div>
@@ -189,6 +229,22 @@ const CalendarEvents = () => {
                     day: 'numeric'
                   })}
                 </p>
+                {(event.start_time || event.end_time || event.location) && (
+                  <div className="space-y-1 mb-2">
+                    {event.start_time && event.end_time && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>🕒</span>
+                        <span>{event.start_time} - {event.end_time}</span>
+                      </div>
+                    )}
+                    {event.location && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>📍</span>
+                        <span>{event.location}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
                 {event.description && (
                   <p className="text-sm text-muted-foreground">{event.description}</p>
                 )}

@@ -292,6 +292,9 @@ export interface CalendarEvent {
   title: string;
   description?: string;
   event_date: string;
+  start_time?: string;
+  end_time?: string;
+  location?: string;
   event_type: string;
 }
 
